@@ -1,0 +1,249 @@
+import { useState, useEffect, useRef } from "react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import cbnLogo from "../../assets/cbn-logo-full.png";
+
+interface NavbarProps {
+  onDonateClick: () => void;
+}
+
+export default function Navbar({ onDonateClick }: NavbarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<"home" | "pages" | null>(null);
+  
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setActiveDropdown(null);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleLinkClick = (selector: string) => {
+    setIsOpen(false);
+    setActiveDropdown(null);
+    const el = document.querySelector(selector);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <nav
+      id="main-nav"
+      ref={dropdownRef}
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-7xl transition-all duration-300"
+    >
+      <div
+        className={`w-full bg-white/95 backdrop-blur-md rounded-[28px] px-6 sm:px-8 py-3.5 flex items-center justify-between border border-gray-100 shadow-xl transition-all duration-300 ${
+          scrolled ? "shadow-2xl border-gray-200/50" : ""
+        }`}
+      >
+        {/* Left Side: Brand Logo */}
+        <div className="flex-shrink-0 flex items-center">
+          <a
+            href="#home"
+            id="nav-logo"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLinkClick("#home");
+            }}
+            className="flex items-center gap-2.5 group"
+          >
+            <img
+              src={cbnLogo}
+              alt="Christ Business Network"
+              className="h-11 w-auto max-w-[180px] sm:h-13 sm:max-w-[220px] object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </a>
+        </div>
+
+        {/* Center: Desktop Nav Links */}
+        <div className="hidden lg:flex items-center gap-8 relative">
+          
+          {/* Home */}
+          <a
+            href="#home"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLinkClick("#home");
+            }}
+            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+          >
+            Home
+          </a>
+
+          {/* About CBN */}
+          <a
+            href="#about"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLinkClick("#about");
+            }}
+            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+          >
+            About CBN
+          </a>
+
+          {/* Membership */}
+          <a
+            href="#membership"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLinkClick("#membership");
+            }}
+            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+          >
+            Membership
+          </a>
+
+          {/* Programmes */}
+          <a
+            href="#programmes"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLinkClick("#programmes");
+            }}
+            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+          >
+            Programmes
+          </a>
+
+          {/* Contact */}
+          <a
+            href="#faq"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLinkClick("#faq");
+            }}
+            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+          >
+            Contact
+          </a>
+
+        </div>
+
+        {/* Right Side: CTA Button and Mobile Menu Toggle */}
+        <div className="flex items-center gap-4">
+          
+          {/* Custom Signature Donation Button */}
+          <button
+            id="nav-donate-btn"
+            onClick={onDonateClick}
+            className="position-aware-btn group hidden lg:flex items-center bg-[#ED343D] text-white pl-5 pr-2 py-2 rounded-full font-sans font-bold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-brand-red/25 active:scale-95 gap-3.5"
+          >
+            <span>Become a Member</span>
+            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-[#0A0F1D] transition-transform duration-300 group-hover:rotate-45">
+              <ArrowUpRight className="w-4.5 h-4.5 stroke-[2.5]" />
+            </div>
+          </button>
+
+          {/* Mobile menu toggle button */}
+          <button
+            id="mobile-menu-toggle"
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden text-[#0C024B] hover:text-[#ED343D] focus:outline-none p-2 rounded-full hover:bg-gray-50 transition-colors"
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden absolute top-[105%] left-0 right-0 bg-white border border-gray-100 rounded-[24px] shadow-2xl py-5 px-6 space-y-4 overflow-hidden z-50"
+          >
+            <div className="flex flex-col gap-1.5">
+              <a
+                href="#home"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLinkClick("#home");
+                }}
+                className="font-sans font-bold text-base text-[#ED343D] py-2 border-b border-gray-50 transition-colors"
+              >
+                Home
+              </a>
+              <a
+                href="#about"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLinkClick("#about");
+                }}
+                className="font-sans font-bold text-base text-[#0C024B] hover:text-[#ED343D] py-2 border-b border-gray-50 transition-colors"
+              >
+                About CBN
+              </a>
+              <a
+                href="#membership"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLinkClick("#membership");
+                }}
+                className="font-sans font-bold text-base text-[#0C024B] hover:text-[#ED343D] py-2 border-b border-gray-50 transition-colors"
+              >
+                Membership
+              </a>
+              <a
+                href="#programmes"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLinkClick("#programmes");
+                }}
+                className="font-sans font-bold text-base text-[#0C024B] hover:text-[#ED343D] py-2 border-b border-gray-50 transition-colors"
+              >
+                Programmes
+              </a>
+              <a
+                href="#faq"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLinkClick("#faq");
+                }}
+                className="font-sans font-bold text-base text-[#0C024B] hover:text-[#ED343D] py-2 transition-colors"
+              >
+                Contact
+              </a>
+            </div>
+
+            <button
+              id="mobile-donate-btn"
+              onClick={() => {
+                setIsOpen(false);
+                onDonateClick();
+              }}
+              className="position-aware-btn w-full flex items-center justify-center gap-2.5 bg-[#ED343D] text-white py-3.5 rounded-2xl font-sans font-bold text-base shadow-lg shadow-brand-red/20 active:scale-95 transition-all"
+            >
+              <span>Become a Member</span>
+              <ArrowUpRight className="w-5 h-5" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+}

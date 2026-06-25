@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --color-brand-red: #ED343D;
+  --color-brand-dark: #0A0F1D;
+  --color-brand-navy: #0C024B;
+  --color-brand-accent: #FFF3F2;
+  --color-brand-gray: #F9FAFB;
+}
+
+.position-aware-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.position-aware-btn::before {
+  content: "";
+  position: absolute;
+  left: 22%;
+  top: 105%;
+  z-index: -1;
+  width: 0;
+  height: 0;
+  border-radius: 9999px;
+  background: #0C024B;
+  transform: translate(-50%, -50%);
+  transition: width 0.45s ease, height 0.45s ease, top 0.45s ease;
+}
+
+.position-aware-btn:hover::before {
+  top: 50%;
+  width: 260%;
+  height: 520%;
+}
+
+.position-aware-btn > * {
+  position: relative;
+  z-index: 1;
+}
