@@ -1,6 +1,6 @@
 {
-  "name": "Giveon Charity Platform",
-  "description": "Christ Business Network (CBN) membership registration and platform, featuring objectives, community engagement, and GTBank payment processing.",
+  "name": "Christ Business Network",
+  "description": "Christ Business Network",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
