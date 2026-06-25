@@ -26,7 +26,7 @@ export default function DonationWidget() {
   };
 
   return (
-    <section id="membership" className="py-24 bg-brand-navy text-white overflow-hidden relative">
+    <section id="membership" className="py-24 bg-[#060127] text-white overflow-hidden relative">
       {/* Background Decorative Circles */}
       <div className="absolute top-[-10%] right-[-10%] w-[50%] aspect-square bg-brand-red/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-10%] left-[-10%] w-[50%] aspect-square bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -46,13 +46,13 @@ export default function DonationWidget() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-stretch">
           
           {/* Left Column: Interactive Guides */}
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-8 flex flex-col">
             
             {/* Guide 1: How do I register as a member? */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 hover:border-brand-red/30 transition-all duration-300">
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 hover:border-brand-red/30 transition-all duration-300 flex-1">
               <div className="flex items-center gap-3 border-b border-white/10 pb-4">
                 <div className="w-10 h-10 rounded-xl bg-brand-red/20 text-brand-red flex items-center justify-center">
                   <HelpCircle className="w-6 h-6" />
@@ -128,7 +128,7 @@ export default function DonationWidget() {
             </div>
 
             {/* Guide 2: How can I confirm my membership? */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 hover:border-blue-500/30 transition-all duration-300">
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 hover:border-blue-500/30 transition-all duration-300 flex-1">
               <div className="flex items-center gap-3 border-b border-white/10 pb-4">
                 <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center">
                   <Award className="w-6 h-6" />
@@ -158,10 +158,10 @@ export default function DonationWidget() {
           </div>
 
           {/* Right Column: Payment Details */}
-          <div className="lg:col-span-5 space-y-8 w-full max-w-md mx-auto">
+          <div className="lg:col-span-5 space-y-8 w-full max-w-xl mx-auto lg:mx-0 flex flex-col">
             
             {/* Payment Options Card */}
-            <div className="bg-white text-brand-dark rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 relative overflow-hidden">
+            <div className="bg-white text-brand-dark rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 relative overflow-hidden flex-1">
               <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/5 rounded-bl-full pointer-events-none"></div>
               
               <div className="flex items-center gap-2 mb-4">
@@ -218,7 +218,7 @@ export default function DonationWidget() {
             </div>
 
             {/* Mobile Money Payment Card */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5">
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5 flex-1">
               <div className="flex items-center gap-3">
                 <img
                   src={mtnMobileMoney}
@@ -234,17 +234,17 @@ export default function DonationWidget() {
               </p>
 
               <div className="bg-white/10 rounded-2xl p-5 border border-white/10 space-y-4">
-                <div className="flex justify-between items-center border-b border-white/10 pb-3">
+                <div className="flex justify-between items-center border-b border-white/10 pb-3 gap-4">
                   <span className="text-xs font-sans font-bold text-gray-400 uppercase">Network</span>
                   <span className="font-display font-extrabold text-yellow-300 text-base text-right">MTN Mobile Money</span>
                 </div>
 
-                <div className="flex justify-between items-center border-b border-white/10 pb-3">
+                <div className="flex justify-between items-center border-b border-white/10 pb-3 gap-4">
                   <span className="text-xs font-sans font-bold text-gray-400 uppercase">Name</span>
                   <span className="font-sans font-bold text-white text-sm text-right">Christ Business Network</span>
                 </div>
 
-                <div className="flex justify-between items-center border-b border-white/10 pb-3">
+                <div className="flex justify-between items-center gap-4">
                   <span className="text-xs font-sans font-bold text-gray-400 uppercase">Number</span>
                   <div className="flex items-center gap-2">
                     <span className="font-mono font-extrabold text-white text-base tracking-wider">0599004586</span>
@@ -258,10 +258,6 @@ export default function DonationWidget() {
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-sans font-bold text-gray-400 uppercase">Reference</span>
-                  <span className="font-sans font-semibold text-white text-sm text-right">Your CBN Registration No.</span>
-                </div>
               </div>
 
               {copiedMomoNumber && (

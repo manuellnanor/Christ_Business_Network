@@ -1,3 +1,7 @@
+import eventAnnualDinner from "../assets/event-annual-dinner.jpg";
+import eventAnnualCongress from "../assets/event-annual-congress.jpg";
+import eventCareerMentorship from "../assets/event-career-mentorship.jpg";
+
 export interface ServiceItem {
   id: string;
   title: string;
@@ -136,55 +140,55 @@ export const METRICS = [
 export const PROGRAMS: ProgramItem[] = [
   {
     id: "prog-1",
-    category: "Hunger Relief",
-    title: "Monthly Food Distribution & Nutrition Support Program",
-    date: "April 22, 2026",
-    image: "https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=800&auto=format&fit=crop",
-    description: "Ensuring families have access to fresh, healthy groceries and basic vitamins to prevent malnutrition.",
+    category: "Dinner",
+    title: "Annual Dinner",
+    date: "February 28, 2026",
+    image: eventAnnualDinner,
+    description: "A special evening of fellowship, celebration, and networking for Christ Business Network members and invited guests.",
   },
   {
     id: "prog-2",
-    category: "Healthcare",
-    title: "Free Community Health Check-Up & Medical Awareness Outreach",
-    date: "April 22, 2026",
-    image: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=800&auto=format&fit=crop",
-    description: "Bringing licensed physicians, essential diagnostic camps, and free prescriptions directly to rural areas.",
+    category: "Congress",
+    title: "9th Annual Congress",
+    date: "December 5, 2025",
+    image: eventAnnualCongress,
+    description: "A gathering for CBN members to arise, build, and occupy the Kingdom of God through fellowship, learning, and shared purpose.",
   },
   {
     id: "prog-3",
-    category: "Disaster Relief",
-    title: "Emergency Shelter Support & Disaster Relief Assistance Program",
-    date: "April 22, 2026",
-    image: "https://images.unsplash.com/photo-1469571486112-7b9501d66711?q=80&w=800&auto=format&fit=crop",
-    description: "Deploying response teams with standard clean water filtration units and temporary shelter setups.",
+    category: "Mentorship",
+    title: "Career Mentorship Seminar",
+    date: "September 11-13, 2025",
+    image: eventCareerMentorship,
+    description: "A career-focused mentorship session designed to guide, equip, and inspire young professionals for purposeful growth.",
   },
 ];
 
 export const FAQS: FaqItem[] = [
   {
     id: "faq-1",
-    question: "Can I make a recurring monthly donation?",
-    answer: "Yes, we offer a monthly giving program that allows you to contribute automatically each month and continuously support your chosen cause. You can change, pause, or cancel your donation plan at any time through our interactive secure donor portal.",
+    question: "What is Christ Business Network (CBN)?",
+    answer: "CBN is a network of graduate professionals of the Christ Apostolic Church International committed to fellowship, networking, and service.",
   },
   {
     id: "faq-2",
-    question: "How do I know my donation is being used effectively?",
-    answer: "We believe in absolute transparency. 92% of all donations go directly to program services on the ground. We provide full real-time impact tracking, audited financial statements, and detailed quarterly progress reports.",
+    question: "Who is eligible to become a member?",
+    answer: "Membership is open to graduate professionals who are members of the Christ Apostolic Church International and meet the association's membership requirements.",
   },
   {
     id: "faq-3",
-    question: "Can I volunteer with your organization?",
-    answer: "Absolutely! We have over 3,500 active volunteers across global chapters. You can register for upcoming field programs, help coordinate food distributions, or assist with digital tutoring sessions.",
+    question: "How do I register as a member?",
+    answer: "Request a registration link through CBN, complete the application process, and follow the payment instructions to receive your membership registration number.",
   },
   {
     id: "faq-4",
-    question: "How can I make a donation?",
-    answer: "You can easily donate using our interactive donation widget. Select a preset amount or input a custom donation value, then click 'Donate Now' to trigger our secure payment simulator.",
+    question: "What benefits do members receive?",
+    answer: "Members enjoy professional networking, mentorship, leadership development, welfare support, subsidized events, and opportunities to serve the Church and society.",
   },
   {
     id: "faq-5",
-    question: "How do I get updates about the causes I support?",
-    answer: "When making a donation, you can opt-in to our real-time impact email notifications. We send photos, video links, and field updates directly from our coordinators on the ground.",
+    question: "How can I get involved in CBN activities?",
+    answer: "You can participate in conferences, seminars, workshops, mentorship programmes, networking events, and community outreach initiatives organized throughout the year.",
   },
 ];
 

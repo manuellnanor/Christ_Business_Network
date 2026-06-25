@@ -105,9 +105,8 @@ export default function Hero({ onDonateClick }: HeroProps) {
             initial={false}
             animate={{
               opacity: current === index ? 0.78 : 0,
-              scale: current === index ? 1 : 1.035,
             }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
             className="absolute inset-0 w-full h-full"
           >
             <img
@@ -149,14 +148,14 @@ export default function Hero({ onDonateClick }: HeroProps) {
             </motion.div>
 
             {/* Slider Content */}
-            <div className="min-h-[220px] sm:min-h-[180px] flex flex-col justify-center">
+            <div className="min-h-[430px] sm:min-h-[330px] md:min-h-[260px] flex flex-col justify-center">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={current}
-                  initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-                  transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
                   className="space-y-6"
                 >
                   {/* Dynamic H1 */}
@@ -188,7 +187,7 @@ export default function Hero({ onDonateClick }: HeroProps) {
       </div>
 
       {/* Slide Navigation Arrow Buttons (visible on screen hover) */}
-      <div className="absolute inset-y-0 left-4 lg:left-8 z-20 flex items-center">
+      <div className="absolute inset-y-0 left-4 lg:left-8 z-20 hidden md:flex items-center">
         <button
           onClick={handlePrev}
           className="p-3 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white hover:text-brand-red transition-all duration-300 backdrop-blur-sm shadow-md"
@@ -198,7 +197,7 @@ export default function Hero({ onDonateClick }: HeroProps) {
         </button>
       </div>
 
-      <div className="absolute inset-y-0 right-4 lg:right-8 z-20 flex items-center">
+      <div className="absolute inset-y-0 right-4 lg:right-8 z-20 hidden md:flex items-center">
         <button
           onClick={handleNext}
           className="p-3 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-white hover:text-brand-red transition-all duration-300 backdrop-blur-sm shadow-md"

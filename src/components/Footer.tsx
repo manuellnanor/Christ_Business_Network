@@ -2,6 +2,24 @@ import { NAV_LINKS } from "../data";
 import cbnLogo from "../../assets/cbn-logo-full.png";
 
 export default function Footer() {
+  const socialLinks = [
+    {
+      label: "Facebook",
+      href: "https://web.facebook.com/profile.php?id=100064829135174",
+      icon: "https://img.icons8.com/ios-filled/50/facebook-new.png",
+    },
+    {
+      label: "Instagram",
+      href: "#instagram",
+      icon: "https://img.icons8.com/ios-filled/50/instagram-new.png",
+    },
+    {
+      label: "X",
+      href: "#x",
+      icon: "https://img.icons8.com/ios-filled/50/twitterx--v1.png",
+    },
+  ];
+
   return (
     <footer className="bg-brand-dark text-white border-t border-white/5 pt-24 pb-12 overflow-hidden relative">
       {/* Decorative Blur */}
@@ -22,17 +40,24 @@ export default function Footer() {
               />
             </div>
             <p className="text-gray-400 font-sans text-xs leading-relaxed max-w-sm">
-              We are a registered global non-profit organization dedicated to empowering families, building resilient community programs, and providing transparent, tracked, direct-to-field donations.
+              We are a fellowship of Christian professionals committed to connecting expertise with purpose, empowering members through mentorship and collaboration, and serving the Church and society with integrity, compassion, and excellence.
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-3">
-              {["pinterest", "twitter", "facebook", "instagram"].map((social) => (
+              {socialLinks.map((social) => (
                 <a
-                  key={social}
-                  href={`#${social}`}
-                  className="w-9 h-9 rounded-full bg-white/5 border border-white/10 hover:border-brand-red hover:bg-brand-red text-gray-400 hover:text-white transition-all flex items-center justify-center font-display font-bold text-xs"
+                  key={social.label}
+                  href={social.href}
+                  target={social.href.startsWith("http") ? "_blank" : undefined}
+                  rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  aria-label={social.label}
+                  className="group w-9 h-9 rounded-full bg-white border border-white/10 hover:border-brand-red hover:bg-brand-red transition-all flex items-center justify-center"
                 >
-                  {social[0].toUpperCase()}
+                  <img
+                    src={social.icon}
+                    alt=""
+                    className="w-4.5 h-4.5 object-contain opacity-80 transition-all group-hover:opacity-100 group-hover:invert"
+                  />
                 </a>
               ))}
             </div>

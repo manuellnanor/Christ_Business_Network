@@ -1,4 +1,4 @@
-import { ArrowUpRight, Calendar, Star } from "lucide-react";
+import { ArrowUpRight, Calendar } from "lucide-react";
 import { PROGRAMS } from "../data";
 import { motion } from "motion/react";
 
@@ -16,22 +16,22 @@ export default function UpcomingPrograms({ onProgramClick, onViewAllPrograms }: 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div className="max-w-xl space-y-4">
             <span className="inline-block px-4 py-1.5 rounded-full bg-brand-accent text-brand-red font-sans font-bold text-xs uppercase tracking-wider">
-              Upcoming Programs
+              Events
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-brand-dark leading-tight">
-              Join us in creating change that matters
+              Connect, Learn, and Grow Together
             </h2>
           </div>
           <div className="flex flex-col items-start gap-4">
             <p className="text-gray-600 font-sans text-sm max-w-sm leading-relaxed">
-              Be part of our fundraising drives, and community outreach programs. Each event is an opportunity to connect, contribute, and make a meaningful difference.
+              Stay connected through conferences, seminars, workshops, networking sessions, and fellowship gatherings designed to strengthen faith, encourage professional growth, and equip members to make a greater impact in the Church and society.
             </p>
             <button
               id="programs-view-all-btn"
               onClick={onViewAllPrograms}
-              className="position-aware-btn group inline-flex items-center gap-2 bg-brand-red text-white px-6 py-3 rounded-full font-sans font-semibold text-sm transition-all duration-300"
+              className="position-aware-btn group inline-flex items-center gap-2 bg-brand-red text-white px-8 py-4 rounded-full font-sans font-semibold text-sm transition-all duration-300"
             >
-              View Upcoming Programs
+              View Upcoming Events
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
           </div>
@@ -93,27 +93,6 @@ export default function UpcomingPrograms({ onProgramClick, onViewAllPrograms }: 
               </div>
             </motion.div>
           ))}
-        </div>
-
-        {/* Social Proof Trust Bar */}
-        <div className="mt-16 pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
-          <span className="inline-block px-3 py-1 bg-red-50 text-brand-red text-xs font-sans font-bold uppercase rounded-md tracking-wider">
-            Free Entry
-          </span>
-          <p className="font-sans text-sm text-gray-600">
-            Join Our Upcoming Programs and Be Part of Meaningful Change.
-          </p>
-          <div className="flex items-center gap-2 text-yellow-400">
-            <span className="text-gray-500 font-sans text-xs font-semibold mr-1">Trusted by 58,900+ Users</span>
-            <div className="flex gap-0.5">
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <Star className="w-3.5 h-3.5 fill-current" />
-            </div>
-            <span className="text-brand-dark font-sans text-xs font-bold">4.9/5</span>
-          </div>
         </div>
 
       </div>

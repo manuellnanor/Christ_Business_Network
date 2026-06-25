@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Plus, Minus, Star } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { FAQS } from "../data";
 import { motion, AnimatePresence } from "motion/react";
+import faqNetworking from "../../assets/faq-networking.jpeg";
 
 export default function Faq() {
   const [openId, setOpenId] = useState<string | null>("faq-1");
@@ -15,10 +16,9 @@ export default function Faq() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-16 items-start">
           
-          {/* Left Side: Photo + Social Trust Card */}
+          {/* Left Side: Photo */}
           <div className="lg:col-span-5 relative">
             <div className="relative">
-              {/* Main Photo of woman serving child */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -27,32 +27,10 @@ export default function Faq() {
                 className="rounded-3xl overflow-hidden shadow-xl"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1541976844346-f18aeac57b06?q=80&w=800&auto=format&fit=crop"
-                  alt="Serving fresh nutritious meals"
+                  src={faqNetworking}
+                  alt="CBN members networking"
                   className="w-full h-[400px] object-cover"
-                  referrerPolicy="no-referrer"
                 />
-              </motion.div>
-
-              {/* Floated Review Badge Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="absolute right-[-20px] bottom-[-20px] bg-brand-dark text-white p-6 rounded-2xl shadow-xl border border-white/5 max-w-[280px]"
-              >
-                <div className="flex gap-1 text-yellow-400 mb-2">
-                  <Star className="w-4 h-4 fill-current" />
-                  <Star className="w-4 h-4 fill-current" />
-                  <Star className="w-4 h-4 fill-current" />
-                  <Star className="w-4 h-4 fill-current" />
-                  <Star className="w-4 h-4 fill-current" />
-                </div>
-                <h4 className="font-display font-extrabold text-2xl text-white">4.9/5</h4>
-                <p className="text-gray-400 font-sans text-xs mt-1">
-                  Trusted by our volunteers for transparency & direct ground operations.
-                </p>
               </motion.div>
             </div>
           </div>
@@ -64,8 +42,11 @@ export default function Faq() {
                 Frequently Asked Questions
               </span>
               <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-brand-dark leading-tight">
-                Your questions answers with transparency & care
+                Frequently Asked Questions
               </h2>
+              <p className="text-gray-600 font-sans text-base leading-relaxed max-w-2xl">
+                Find answers to common questions about Christ Business Network, including membership, registration, benefits, and how you can become part of our growing community of Christian professionals.
+              </p>
             </div>
 
             {/* Accordion list */}

@@ -29,7 +29,7 @@ export default function Blogs({ onBlogClick, onViewAllBlogs }: BlogsProps) {
             <button
               id="blogs-all-btn"
               onClick={onViewAllBlogs}
-              className="position-aware-btn group inline-flex items-center gap-2 bg-brand-red text-white px-6 py-3 rounded-full font-sans font-semibold text-sm transition-all duration-300"
+              className="position-aware-btn group inline-flex items-center gap-2 bg-brand-red text-white px-8 py-4 rounded-full font-sans font-semibold text-sm transition-all duration-300"
             >
               View All Blogs
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

@@ -72,7 +72,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
             <img
               src={cbnLogo}
               alt="Christ Business Network"
-              className="h-11 w-auto max-w-[180px] sm:h-13 sm:max-w-[220px] object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+              className="h-9 w-auto max-w-[168px] sm:h-10 sm:max-w-[224px] lg:max-w-[264px] object-contain transition-transform duration-300 group-hover:scale-[1.02]"
             />
           </a>
         </div>
@@ -87,7 +87,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
               e.preventDefault();
               handleLinkClick("#home");
             }}
-            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+            className="nav-menu-link nav-menu-link-active hover:text-[#D53F34] transition-colors"
           >
             Home
           </a>
@@ -99,7 +99,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
               e.preventDefault();
               handleLinkClick("#about");
             }}
-            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+            className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] transition-colors"
           >
             About CBN
           </a>
@@ -111,7 +111,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
               e.preventDefault();
               handleLinkClick("#membership");
             }}
-            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+            className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] transition-colors"
           >
             Membership
           </a>
@@ -123,7 +123,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
               e.preventDefault();
               handleLinkClick("#programmes");
             }}
-            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+            className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] transition-colors"
           >
             Programmes
           </a>
@@ -135,7 +135,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
               e.preventDefault();
               handleLinkClick("#faq");
             }}
-            className="font-sans font-bold text-sm text-[#0C024B] hover:text-[#ED343D] transition-colors"
+            className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] transition-colors"
           >
             Contact
           </a>
@@ -184,7 +184,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
                   e.preventDefault();
                   handleLinkClick("#home");
                 }}
-                className="font-sans font-bold text-base text-[#ED343D] py-2 border-b border-gray-50 transition-colors"
+                className="nav-menu-link nav-menu-link-active py-2 border-b border-gray-50 transition-colors"
               >
                 Home
               </a>
@@ -194,7 +194,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
                   e.preventDefault();
                   handleLinkClick("#about");
                 }}
-                className="font-sans font-bold text-base text-[#0C024B] hover:text-[#ED343D] py-2 border-b border-gray-50 transition-colors"
+                className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] py-2 border-b border-gray-50 transition-colors"
               >
                 About CBN
               </a>
@@ -204,7 +204,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
                   e.preventDefault();
                   handleLinkClick("#membership");
                 }}
-                className="font-sans font-bold text-base text-[#0C024B] hover:text-[#ED343D] py-2 border-b border-gray-50 transition-colors"
+                className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] py-2 border-b border-gray-50 transition-colors"
               >
                 Membership
               </a>
@@ -214,7 +214,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
                   e.preventDefault();
                   handleLinkClick("#programmes");
                 }}
-                className="font-sans font-bold text-base text-[#0C024B] hover:text-[#ED343D] py-2 border-b border-gray-50 transition-colors"
+                className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] py-2 border-b border-gray-50 transition-colors"
               >
                 Programmes
               </a>
@@ -224,7 +224,7 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
                   e.preventDefault();
                   handleLinkClick("#faq");
                 }}
-                className="font-sans font-bold text-base text-[#0C024B] hover:text-[#ED343D] py-2 transition-colors"
+                className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] py-2 transition-colors"
               >
                 Contact
               </a>

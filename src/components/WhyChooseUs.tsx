@@ -1,5 +1,8 @@
 import { CheckCircle2, ArrowUpRight, Users } from "lucide-react";
 import { motion } from "motion/react";
+import benefitsNetworking from "../../assets/benefits-networking.jpeg";
+import benefitsWelfare from "../../assets/benefits-welfare.jpeg";
+import benefitsFellowship from "../../assets/benefits-fellowship.jpeg";
 
 interface WhyChooseUsProps {
   onContactClick: () => void;
@@ -7,10 +10,10 @@ interface WhyChooseUsProps {
 
 export default function WhyChooseUs({ onContactClick }: WhyChooseUsProps) {
   const points = [
-    "Real Time Impact Tracking",
-    "Transparent, easy to read reports",
-    "Track the ongoing status of donation",
-    "Access your own dashboard monitor",
+    "Professional Networking Across Diverse Industries",
+    "Mentorship and Leadership Development",
+    "Welfare Support During Times of Joy and Need",
+    "Exclusive Access to Conferences, Seminars, and Workshops",
   ];
 
   return (
@@ -30,10 +33,9 @@ export default function WhyChooseUs({ onContactClick }: WhyChooseUsProps) {
                 className="rounded-3xl overflow-hidden shadow-2xl max-w-[85%] relative z-10"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1471286174243-e85af856cb7f?q=80&w=800&auto=format&fit=crop"
-                  alt="Boy holding teddy bear"
+                  src={benefitsNetworking}
+                  alt="CBN members together"
                   className="w-full h-[450px] object-cover"
-                  referrerPolicy="no-referrer"
                 />
               </motion.div>
 
@@ -46,14 +48,27 @@ export default function WhyChooseUs({ onContactClick }: WhyChooseUsProps) {
                 className="absolute right-0 bottom-4 w-48 h-48 rounded-2xl overflow-hidden shadow-2xl border-4 border-white z-20 hidden sm:block"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1541976844346-f18aeac57b06?q=80&w=400&auto=format&fit=crop"
-                  alt="Child smiling in village"
+                  src={benefitsWelfare}
+                  alt="CBN welfare support"
                   className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
                 />
               </motion.div>
 
-              {/* Float Badge: 3,500+ Active Volunteers */}
+              <motion.div
+                initial={{ opacity: 0, x: 40, y: -20 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.25 }}
+                className="absolute right-10 top-[-28px] w-44 h-36 rounded-2xl overflow-hidden shadow-2xl border-4 border-white z-20 hidden md:block"
+              >
+                <img
+                  src={benefitsFellowship}
+                  alt="CBN fellowship gathering"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+
+              {/* Float Badge: 500+ Members */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -65,8 +80,8 @@ export default function WhyChooseUs({ onContactClick }: WhyChooseUsProps) {
                   <Users className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <span className="block font-display font-extrabold text-lg text-white">3,500+</span>
-                  <span className="block font-sans text-xs text-gray-300">Active Volunteers</span>
+                  <span className="block font-display font-extrabold text-lg text-white">500+</span>
+                  <span className="block font-sans text-xs text-gray-300">Members</span>
                 </div>
               </motion.div>
             </div>
@@ -76,13 +91,13 @@ export default function WhyChooseUs({ onContactClick }: WhyChooseUsProps) {
           <div className="lg:col-span-6 space-y-8">
             <div className="space-y-4">
               <span className="inline-block px-4 py-1.5 rounded-full bg-brand-accent text-brand-red font-sans font-bold text-xs uppercase tracking-wider">
-                Why Choose Us
+                Benefits
               </span>
               <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-brand-dark leading-tight">
-                Transforming generosity into meaningful change
+                Growing Together in Faith and Purpose
               </h2>
               <p className="text-gray-600 font-sans text-base leading-relaxed">
-                We design and implement sustainable programs in education, healthcare, hunger relief, and disaster response to uplift underserved communities & create lasting social impact.
+                Join a vibrant community of Christian professionals committed to fellowship, mentorship, leadership, and service. As a CBN member, you'll build meaningful relationships, grow professionally and spiritually, and contribute to advancing God's Kingdom through your gifts and expertise.
               </p>
             </div>
 
