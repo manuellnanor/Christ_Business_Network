@@ -10,7 +10,7 @@ export default function Footer() {
     },
     {
       label: "Instagram",
-      href: "#instagram",
+      href: "https://www.instagram.com/cbnprofgh/",
       icon: "https://img.icons8.com/ios-filled/50/instagram-new.png",
     },
     {
