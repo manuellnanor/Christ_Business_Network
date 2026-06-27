@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import cbnLogo from "../../assets/cbn-logo-full.png";
+import { NAV_LINKS } from "../data";
 
 interface NavbarProps {
   onDonateClick: () => void;
@@ -80,65 +81,21 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
         {/* Center: Desktop Nav Links */}
         <div className="hidden lg:flex items-center gap-8 relative">
           
-          {/* Home */}
-          <a
-            href="#home"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick("#home");
-            }}
-            className="nav-menu-link nav-menu-link-active hover:text-[#D53F34] transition-colors"
-          >
-            Home
-          </a>
-
-          {/* About CBN */}
-          <a
-            href="#about"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick("#about");
-            }}
-            className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] transition-colors"
-          >
-            About CBN
-          </a>
-
-          {/* Membership */}
-          <a
-            href="#membership"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick("#membership");
-            }}
-            className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] transition-colors"
-          >
-            Membership
-          </a>
-
-          {/* Programmes */}
-          <a
-            href="#programmes"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick("#programmes");
-            }}
-            className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] transition-colors"
-          >
-            Programmes
-          </a>
-
-          {/* Contact */}
-          <a
-            href="#faq"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick("#faq");
-            }}
-            className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] transition-colors"
-          >
-            Contact
-          </a>
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => {
+                e.preventDefault();
+                handleLinkClick(link.href);
+              }}
+              className={`nav-menu-link hover:text-[#D53F34] transition-colors ${
+                link.href === "#home" ? "nav-menu-link-active" : "text-[#0C024B]"
+              }`}
+            >
+              {link.label}
+            </a>
+          ))}
 
         </div>
 
@@ -178,56 +135,25 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
             className="lg:hidden absolute top-[105%] left-0 right-0 bg-white border border-gray-100 rounded-[24px] shadow-2xl py-5 px-6 space-y-4 overflow-hidden z-50"
           >
             <div className="flex flex-col gap-1.5">
-              <a
-                href="#home"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick("#home");
-                }}
-                className="nav-menu-link nav-menu-link-active py-2 border-b border-gray-50 transition-colors"
-              >
-                Home
-              </a>
-              <a
-                href="#about"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick("#about");
-                }}
-                className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] py-2 border-b border-gray-50 transition-colors"
-              >
-                About CBN
-              </a>
-              <a
-                href="#membership"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick("#membership");
-                }}
-                className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] py-2 border-b border-gray-50 transition-colors"
-              >
-                Membership
-              </a>
-              <a
-                href="#programmes"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick("#programmes");
-                }}
-                className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] py-2 border-b border-gray-50 transition-colors"
-              >
-                Programmes
-              </a>
-              <a
-                href="#faq"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick("#faq");
-                }}
-                className="nav-menu-link text-[#0C024B] hover:text-[#D53F34] py-2 transition-colors"
-              >
-                Contact
-              </a>
+              {NAV_LINKS.map((link, index) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLinkClick(link.href);
+                  }}
+                  className={`nav-menu-link py-2 transition-colors ${
+                    index === NAV_LINKS.length - 1 ? "" : "border-b border-gray-50"
+                  } ${
+                    link.href === "#home"
+                      ? "nav-menu-link-active"
+                      : "text-[#0C024B] hover:text-[#D53F34]"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
 
             <button

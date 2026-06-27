@@ -1,6 +1,17 @@
 import eventAnnualDinner from "../assets/event-annual-dinner.jpg";
 import eventAnnualCongress from "../assets/event-annual-congress.jpg";
 import eventCareerMentorship from "../assets/event-career-mentorship.jpg";
+import aboutNetworking from "../assets/about-networking.jpeg";
+import aboutFellowship from "../assets/about-fellowship.jpeg";
+import aboutFamily from "../assets/about-family.jpeg";
+import benefitsFellowship from "../assets/benefits-fellowship.jpeg";
+import benefitsNetworking from "../assets/benefits-networking.jpeg";
+import benefitsWelfare from "../assets/benefits-welfare.jpeg";
+import cbnNetworkGroup from "../assets/cbn-network-group.jpg";
+import heroCommunity from "../assets/hero-community.jpeg";
+import heroEmpoweringProfessionals from "../assets/hero-empowering-professionals.jpg";
+import heroNetworking from "../assets/hero-networking.jpeg";
+import heroPanel from "../assets/hero-panel.jpeg";
 
 export interface ServiceItem {
   id: string;
@@ -44,12 +55,27 @@ export interface BlogItem {
   author: string;
 }
 
+export interface GalleryAlbum {
+  id: string;
+  title: string;
+  items: number;
+  image: string;
+}
+
+export interface GalleryImage {
+  id: string;
+  title: string;
+  album: string;
+  image: string;
+}
+
 export const NAV_LINKS = [
   { label: "Home", href: "#home" },
   { label: "About CBN", href: "#about" },
   { label: "Membership", href: "#membership" },
   { label: "Programmes", href: "#programmes" },
-  { label: "Contact", href: "#faq" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export const SERVICES: ServiceItem[] = [
@@ -190,6 +216,74 @@ export const FAQS: FaqItem[] = [
     question: "How can I get involved in CBN activities?",
     answer: "You can participate in conferences, seminars, workshops, mentorship programmes, networking events, and community outreach initiatives organized throughout the year.",
   },
+];
+
+export const GALLERY_ALBUMS: GalleryAlbum[] = [
+  {
+    id: "annual-dinner",
+    title: "CBN Annual Dinner",
+    items: 34,
+    image: eventAnnualDinner,
+  },
+  {
+    id: "ninth-congress",
+    title: "CBN 9th Congress",
+    items: 49,
+    image: eventAnnualCongress,
+  },
+  {
+    id: "career-mentorship",
+    title: "Career Mentorship Session with Accra West T. Youth Ministry",
+    items: 71,
+    image: eventCareerMentorship,
+  },
+  {
+    id: "end-of-year-dinner",
+    title: "End of Year Dinner 2024",
+    items: 113,
+    image: cbnNetworkGroup,
+  },
+  {
+    id: "eighth-congress",
+    title: "CBN 8th Annual Congress 2024",
+    items: 66,
+    image: heroPanel,
+  },
+  {
+    id: "thanksgiving-service",
+    title: "Thanksgiving Service 2022",
+    items: 23,
+    image: aboutFellowship,
+  },
+  {
+    id: "convofeast",
+    title: "ConvoFeast 2022",
+    items: 45,
+    image: aboutNetworking,
+  },
+  {
+    id: "mentoring-casa",
+    title: "Mentoring Session - CASA Congress 2021",
+    items: 24,
+    image: heroNetworking,
+  },
+];
+
+export const GALLERY_IMAGES: GalleryImage[] = [
+  { id: "gallery-1", title: "Annual Dinner fellowship", album: "CBN Annual Dinner", image: eventAnnualDinner },
+  { id: "gallery-2", title: "Congress delegates", album: "CBN 9th Congress", image: eventAnnualCongress },
+  { id: "gallery-3", title: "Career mentorship materials", album: "Career Mentorship Session with Accra West T. Youth Ministry", image: eventCareerMentorship },
+  { id: "gallery-4", title: "End of year gathering", album: "End of Year Dinner 2024", image: cbnNetworkGroup },
+  { id: "gallery-5", title: "Annual congress session", album: "CBN 8th Annual Congress 2024", image: heroPanel },
+  { id: "gallery-6", title: "Thanksgiving service moment", album: "Thanksgiving Service 2022", image: aboutFellowship },
+  { id: "gallery-7", title: "ConvoFeast group session", album: "ConvoFeast 2022", image: aboutNetworking },
+  { id: "gallery-8", title: "CASA congress mentoring", album: "Mentoring Session - CASA Congress 2021", image: heroNetworking },
+  { id: "gallery-9", title: "CBN family gathering", album: "CBN Annual Dinner", image: aboutFamily },
+  { id: "gallery-10", title: "Professional networking", album: "CBN 9th Congress", image: benefitsNetworking },
+  { id: "gallery-11", title: "Fellowship and worship", album: "Thanksgiving Service 2022", image: benefitsFellowship },
+  { id: "gallery-12", title: "Welfare and support", album: "ConvoFeast 2022", image: benefitsWelfare },
+  { id: "gallery-13", title: "Community impact", album: "Career Mentorship Session with Accra West T. Youth Ministry", image: heroCommunity },
+  { id: "gallery-14", title: "Empowered professionals", album: "Mentoring Session - CASA Congress 2021", image: heroEmpoweringProfessionals },
 ];
 
 export const BLOGS: BlogItem[] = [

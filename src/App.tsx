@@ -8,6 +8,8 @@ import WatchStory from "./components/WatchStory";
 import Team from "./components/Team";
 import UpcomingPrograms from "./components/UpcomingPrograms";
 import DonationWidget from "./components/DonationWidget";
+import Gallery from "./components/Gallery";
+import Contact from "./components/Contact";
 
 import Faq from "./components/Faq";
 import Footer from "./components/Footer";
@@ -29,7 +31,7 @@ export default function App() {
   };
 
   const scrollToContact = () => {
-    const el = document.getElementById("faq");
+    const el = document.getElementById("contact");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
@@ -69,8 +71,14 @@ export default function App() {
         {/* Interactive Donation widget */}
         <DonationWidget />
 
+        {/* Gallery */}
+        <Gallery />
+
         {/* Our Team */}
         <Team />
+
+        {/* Contact */}
+        <Contact />
 
         {/* Accordion FAQ with side photo */}
         <Faq />
