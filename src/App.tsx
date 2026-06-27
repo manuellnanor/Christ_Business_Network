@@ -42,12 +42,17 @@ export default function App() {
   useEffect(() => {
     const handleRouteChange = () => {
       setRoute(getCurrentRoute());
-      window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     window.addEventListener("hashchange", handleRouteChange);
     return () => window.removeEventListener("hashchange", handleRouteChange);
   }, []);
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+  }, [route]);
 
   const navigateTo = (nextRoute: AppRoute) => {
     window.location.hash = nextRoute;
@@ -136,7 +141,7 @@ export default function App() {
       <Navbar onDonateClick={goToMembership} currentRoute={route} />
 
       {/* Main Body Sections */}
-      <main>{renderPage()}</main>
+      <main key={route}>{renderPage()}</main>
 
       {/* Footer Navigation & Newsletter */}
       <Footer />
