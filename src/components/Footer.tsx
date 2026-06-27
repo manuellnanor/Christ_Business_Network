@@ -15,7 +15,7 @@ export default function Footer() {
     },
     {
       label: "X",
-      href: "#x",
+      href: "https://x.com/cbnprofgh?s=11",
       icon: "https://img.icons8.com/ios-filled/50/twitterx--v1.png",
     },
   ];
