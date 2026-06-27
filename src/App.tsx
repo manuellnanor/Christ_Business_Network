@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -34,12 +34,22 @@ const getCurrentRoute = (): AppRoute => {
   return validRoutes.includes(route as AppRoute) ? (route as AppRoute) : "/";
 };
 
+const resetPageScroll = () => {
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+};
+
 export default function App() {
   // Modal states for dynamic items
   const [activeProgramId, setActiveProgramId] = useState<string | null>(null);
   const [route, setRoute] = useState<AppRoute>(getCurrentRoute);
 
   useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
     const handleRouteChange = () => {
       setRoute(getCurrentRoute());
     };
@@ -48,10 +58,11 @@ export default function App() {
     return () => window.removeEventListener("hashchange", handleRouteChange);
   }, []);
 
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    });
+  useLayoutEffect(() => {
+    resetPageScroll();
+    const timeoutId = window.setTimeout(resetPageScroll, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, [route]);
 
   const navigateTo = (nextRoute: AppRoute) => {
