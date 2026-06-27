@@ -77,6 +77,20 @@ export default function Footer() {
                   >
                     {link.label}
                   </a>
+                  {link.children && (
+                    <ul className="mt-2 space-y-2 pl-3 border-l border-white/10">
+                      {link.children.map((child) => (
+                        <li key={child.label}>
+                          <a
+                            href={child.href}
+                            className="text-gray-500 hover:text-brand-red font-sans text-xs transition-colors"
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
@@ -89,11 +103,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5">
               {[
-                { label: "Membership Benefits", href: "#membership" },
-                { label: "Membership Requirements", href: "#membership" },
-                { label: "How to Register", href: "#membership" },
-                { label: "Payment Information", href: "#membership" },
-                { label: "FAQs", href: "#faq" },
+                { label: "Membership Benefits", href: "#/membership" },
+                { label: "Membership Requirements", href: "#/membership" },
+                { label: "How to Register", href: "#/membership" },
+                { label: "Payment Information", href: "#/membership" },
+                { label: "FAQs", href: "#/contact" },
               ].map((item) => (
                 <li key={item.label}>
                   <a

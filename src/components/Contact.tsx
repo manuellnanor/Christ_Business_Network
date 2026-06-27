@@ -1,6 +1,5 @@
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { motion } from "motion/react";
-import aboutFamily from "../../assets/about-family.jpeg";
 
 export default function Contact() {
   return (
@@ -69,17 +68,8 @@ export default function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
-            className="lg:col-span-7 bg-brand-dark rounded-3xl overflow-hidden shadow-2xl grid md:grid-cols-2"
+            className="lg:col-span-7 bg-brand-dark rounded-3xl overflow-hidden shadow-2xl"
           >
-            <div className="relative min-h-[280px]">
-              <img
-                src={aboutFamily}
-                alt="CBN members"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-brand-dark/20"></div>
-            </div>
-
             <form className="p-6 sm:p-8 space-y-5">
               <div>
                 <label htmlFor="contact-name" className="block text-white font-sans font-bold text-xs uppercase tracking-wider mb-2">

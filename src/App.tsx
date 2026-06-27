@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -18,71 +18,125 @@ import { PROGRAMS } from "./data";
 import { X, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
+type AppRoute = "/" | "/about" | "/membership" | "/programmes/events" | "/programmes/gallery" | "/contact";
+
+const getCurrentRoute = (): AppRoute => {
+  const route = window.location.hash.replace("#", "") || "/";
+  const validRoutes: AppRoute[] = [
+    "/",
+    "/about",
+    "/membership",
+    "/programmes/events",
+    "/programmes/gallery",
+    "/contact",
+  ];
+
+  return validRoutes.includes(route as AppRoute) ? (route as AppRoute) : "/";
+};
+
 export default function App() {
   // Modal states for dynamic items
   const [activeProgramId, setActiveProgramId] = useState<string | null>(null);
+  const [route, setRoute] = useState<AppRoute>(getCurrentRoute);
 
-  // Common CTA scroll-handler
-  const scrollToMembership = () => {
-    const el = document.getElementById("membership");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setRoute(getCurrentRoute());
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    window.addEventListener("hashchange", handleRouteChange);
+    return () => window.removeEventListener("hashchange", handleRouteChange);
+  }, []);
+
+  const navigateTo = (nextRoute: AppRoute) => {
+    window.location.hash = nextRoute;
   };
 
-  const scrollToContact = () => {
-    const el = document.getElementById("contact");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+  const goToMembership = () => {
+    navigateTo("/membership");
+  };
+
+  const goToContact = () => {
+    navigateTo("/contact");
   };
 
   // Find records
   const activeProgram = PROGRAMS.find((p) => p.id === activeProgramId);
 
+  const renderPage = () => {
+    if (route === "/about") {
+      return (
+        <>
+          <About onLearnMoreClick={goToContact} />
+          <WatchStory />
+          <Objectives />
+          <WhyChooseUs onContactClick={goToContact} />
+          <Team />
+          <Faq />
+        </>
+      );
+    }
+
+    if (route === "/membership") {
+      return (
+        <>
+          <DonationWidget />
+          <Faq />
+        </>
+      );
+    }
+
+    if (route === "/programmes/events") {
+      return (
+        <>
+          <UpcomingPrograms
+            onProgramClick={(id) => setActiveProgramId(id)}
+            onViewAllPrograms={goToMembership}
+          />
+          <Faq />
+        </>
+      );
+    }
+
+    if (route === "/programmes/gallery") {
+      return <Gallery />;
+    }
+
+    if (route === "/contact") {
+      return (
+        <>
+          <Contact />
+          <Faq />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Hero onDonateClick={goToMembership} onWatchStoryClick={goToContact} />
+        <About onLearnMoreClick={goToContact} />
+        <WatchStory />
+        <Objectives />
+        <WhyChooseUs onContactClick={goToContact} />
+        <UpcomingPrograms
+          onProgramClick={(id) => setActiveProgramId(id)}
+          onViewAllPrograms={() => navigateTo("/programmes/events")}
+        />
+        <DonationWidget />
+        <Team />
+        <Faq />
+      </>
+    );
+  };
+
   return (
     <div className="bg-white text-brand-dark selection:bg-brand-red selection:text-white min-h-screen">
       {/* Header / Navbar */}
-      <Navbar onDonateClick={scrollToMembership} />
+      <Navbar onDonateClick={goToMembership} currentRoute={route} />
 
       {/* Main Body Sections */}
-      <main>
-        {/* Hero Banner */}
-        <Hero onDonateClick={scrollToMembership} onWatchStoryClick={scrollToContact} />
-
-        {/* About Section */}
-        <About onLearnMoreClick={scrollToContact} />
-
-        {/* CBN Network Section */}
-        <WatchStory />
-
-        {/* Objectives Section */}
-        <Objectives />
-
-        {/* Why Choose Us */}
-        <WhyChooseUs onContactClick={scrollToContact} />
-
-        {/* Upcoming Programs / Events */}
-        <UpcomingPrograms
-          onProgramClick={(id) => setActiveProgramId(id)}
-          onViewAllPrograms={scrollToMembership}
-        />
-
-        {/* Interactive Donation widget */}
-        <DonationWidget />
-
-        {/* Gallery */}
-        <Gallery />
-
-        {/* Our Team */}
-        <Team />
-
-        {/* Contact */}
-        <Contact />
-
-        {/* Accordion FAQ with side photo */}
-        <Faq />
-      </main>
+      <main>{renderPage()}</main>
 
       {/* Footer Navigation & Newsletter */}
       <Footer />
@@ -158,7 +212,7 @@ export default function App() {
                   <button
                     onClick={() => {
                       setActiveProgramId(null);
-                      scrollToMembership();
+                      goToMembership();
                     }}
                     className="flex-1 bg-brand-red hover:bg-brand-red/95 text-white font-sans font-bold py-3 rounded-xl text-sm transition-all"
                   >

@@ -69,13 +69,25 @@ export interface GalleryImage {
   image: string;
 }
 
-export const NAV_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "About CBN", href: "#about" },
-  { label: "Membership", href: "#membership" },
-  { label: "Programmes", href: "#programmes" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Contact", href: "#contact" },
+export interface NavLink {
+  label: string;
+  href: string;
+  children?: NavLink[];
+}
+
+export const NAV_LINKS: NavLink[] = [
+  { label: "Home", href: "#/" },
+  { label: "About CBN", href: "#/about" },
+  { label: "Membership", href: "#/membership" },
+  {
+    label: "Programmes",
+    href: "#/programmes/events",
+    children: [
+      { label: "Events", href: "#/programmes/events" },
+      { label: "Gallery", href: "#/programmes/gallery" },
+    ],
+  },
+  { label: "Contact", href: "#/contact" },
 ];
 
 export const SERVICES: ServiceItem[] = [

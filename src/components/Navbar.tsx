@@ -1,17 +1,18 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { ChevronDown, Menu, X, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import cbnLogo from "../../assets/cbn-logo-full.png";
 import { NAV_LINKS } from "../data";
 
 interface NavbarProps {
   onDonateClick: () => void;
+  currentRoute: string;
 }
 
-export default function Navbar({ onDonateClick }: NavbarProps) {
+export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<"home" | "pages" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<"programmes" | null>(null);
   
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -39,13 +40,20 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
     };
   }, []);
 
-  const handleLinkClick = (selector: string) => {
+  const handleLinkClick = (href: string) => {
     setIsOpen(false);
     setActiveDropdown(null);
-    const el = document.querySelector(selector);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+    if (window.location.hash === href) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
     }
+
+    window.location.hash = href.replace("#", "");
+  };
+
+  const isActive = (href: string, children?: { href: string }[]) => {
+    const route = href.replace("#", "");
+    return currentRoute === route || Boolean(children?.some((child) => currentRoute === child.href.replace("#", "")));
   };
 
   return (
@@ -62,11 +70,11 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
         {/* Left Side: Brand Logo */}
         <div className="flex-shrink-0 flex items-center">
           <a
-            href="#home"
+            href="#/"
             id="nav-logo"
             onClick={(e) => {
               e.preventDefault();
-              handleLinkClick("#home");
+              handleLinkClick("#/");
             }}
             className="flex items-center gap-2.5 group"
           >
@@ -82,19 +90,63 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
         <div className="hidden lg:flex items-center gap-8 relative">
           
           {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => {
-                e.preventDefault();
-                handleLinkClick(link.href);
-              }}
-              className={`nav-menu-link hover:text-[#D53F34] transition-colors ${
-                link.href === "#home" ? "nav-menu-link-active" : "text-[#0C024B]"
-              }`}
-            >
-              {link.label}
-            </a>
+            link.children ? (
+              <div key={link.label} className="relative">
+                <button
+                  type="button"
+                  onClick={() => setActiveDropdown(activeDropdown === "programmes" ? null : "programmes")}
+                  className={`nav-menu-link inline-flex items-center gap-1.5 hover:text-[#D53F34] transition-colors ${
+                    isActive(link.href, link.children) ? "nav-menu-link-active" : "text-[#0C024B]"
+                  }`}
+                >
+                  {link.label}
+                  <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === "programmes" ? "rotate-180" : ""}`} />
+                </button>
+
+                <AnimatePresence>
+                  {activeDropdown === "programmes" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute left-1/2 top-[calc(100%+1rem)] w-48 -translate-x-1/2 rounded-2xl border border-gray-100 bg-white p-2 shadow-2xl"
+                    >
+                      {link.children.map((child) => (
+                        <a
+                          key={child.label}
+                          href={child.href}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleLinkClick(child.href);
+                          }}
+                          className={`block rounded-xl px-4 py-3 font-sans text-sm font-bold transition-colors ${
+                            isActive(child.href)
+                              ? "bg-brand-accent text-brand-red"
+                              : "text-brand-navy hover:bg-gray-50 hover:text-brand-red"
+                          }`}
+                        >
+                          {child.label}
+                        </a>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLinkClick(link.href);
+                }}
+                className={`nav-menu-link hover:text-[#D53F34] transition-colors ${
+                  isActive(link.href) ? "nav-menu-link-active" : "text-[#0C024B]"
+                }`}
+              >
+                {link.label}
+              </a>
+            )
           ))}
 
         </div>
@@ -136,23 +188,72 @@ export default function Navbar({ onDonateClick }: NavbarProps) {
           >
             <div className="flex flex-col gap-1.5">
               {NAV_LINKS.map((link, index) => (
-                <a
+                <div
                   key={link.label}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleLinkClick(link.href);
-                  }}
-                  className={`nav-menu-link py-2 transition-colors ${
-                    index === NAV_LINKS.length - 1 ? "" : "border-b border-gray-50"
-                  } ${
-                    link.href === "#home"
-                      ? "nav-menu-link-active"
-                      : "text-[#0C024B] hover:text-[#D53F34]"
-                  }`}
+                  className={index === NAV_LINKS.length - 1 ? "" : "border-b border-gray-50"}
                 >
-                  {link.label}
-                </a>
+                  {link.children ? (
+                    <div className="py-2">
+                      <button
+                        type="button"
+                        onClick={() => setActiveDropdown(activeDropdown === "programmes" ? null : "programmes")}
+                        className={`nav-menu-link flex w-full items-center justify-between transition-colors ${
+                          isActive(link.href, link.children)
+                            ? "nav-menu-link-active"
+                            : "text-[#0C024B] hover:text-[#D53F34]"
+                        }`}
+                      >
+                        {link.label}
+                        <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === "programmes" ? "rotate-180" : ""}`} />
+                      </button>
+                      <AnimatePresence>
+                        {activeDropdown === "programmes" && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-3 space-y-1 rounded-2xl bg-gray-50 p-2">
+                              {link.children.map((child) => (
+                                <a
+                                  key={child.label}
+                                  href={child.href}
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    handleLinkClick(child.href);
+                                  }}
+                                  className={`block rounded-xl px-4 py-2.5 font-sans text-sm font-bold transition-colors ${
+                                    isActive(child.href)
+                                      ? "bg-white text-brand-red shadow-sm"
+                                      : "text-brand-navy hover:bg-white hover:text-brand-red"
+                                  }`}
+                                >
+                                  {child.label}
+                                </a>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <a
+                      href={link.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleLinkClick(link.href);
+                      }}
+                      className={`nav-menu-link block py-2 transition-colors ${
+                        isActive(link.href)
+                          ? "nav-menu-link-active"
+                          : "text-[#0C024B] hover:text-[#D53F34]"
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  )}
+                </div>
               ))}
             </div>
 
