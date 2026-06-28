@@ -106,16 +106,10 @@ export default function Gallery() {
   }, [filteredImages.length, selectedImageIndex]);
 
   return (
-    <section id="gallery" className="py-24 bg-brand-gray overflow-hidden">
+    <section id="gallery" className="py-20 bg-brand-gray overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
-          <div className="max-w-2xl space-y-4">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-white text-brand-red font-sans font-bold text-xs uppercase tracking-wider">
-              Gallery
-            </span>
-            <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-brand-dark leading-tight">
-              Moments from CBN gatherings and programmes
-            </h2>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
+          <div className="max-w-2xl">
             <p className="text-gray-600 font-sans text-base leading-relaxed">
               Browse albums from dinners, congresses, mentorship sessions, thanksgiving services, and professional fellowship events.
             </p>

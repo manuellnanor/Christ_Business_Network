@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import PageHero from "./components/PageHero";
 import About from "./components/About";
 import Objectives from "./components/Objectives";
 import WhyChooseUs from "./components/WhyChooseUs";
@@ -17,6 +18,11 @@ import Footer from "./components/Footer";
 import { PROGRAMS } from "./data";
 import { X, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import aboutHeroImage from "../assets/about-networking.jpeg";
+import membershipHeroImage from "../assets/benefits-networking.jpeg";
+import eventsHeroImage from "../assets/event-annual-congress.jpg";
+import galleryHeroImage from "../assets/gallery/annual-dinner/annual-dinner-32.jpg";
+import contactHeroImage from "../assets/cbn-network-group.jpg";
 
 type AppRoute = "/" | "/about" | "/membership" | "/programmes/events" | "/programmes/gallery" | "/contact";
 
@@ -84,6 +90,11 @@ export default function App() {
     if (route === "/about") {
       return (
         <>
+          <PageHero
+            title="About CBN"
+            current="About Us"
+            image={aboutHeroImage}
+          />
           <About onLearnMoreClick={goToContact} />
           <WatchStory />
           <Objectives />
@@ -97,6 +108,11 @@ export default function App() {
     if (route === "/membership") {
       return (
         <>
+          <PageHero
+            title="Membership"
+            current="Membership"
+            image={membershipHeroImage}
+          />
           <DonationWidget />
           <Faq />
         </>
@@ -106,6 +122,12 @@ export default function App() {
     if (route === "/programmes/events") {
       return (
         <>
+          <PageHero
+            title="Events"
+            parent="Programmes"
+            current="Events"
+            image={eventsHeroImage}
+          />
           <UpcomingPrograms
             onProgramClick={(id) => setActiveProgramId(id)}
             onViewAllPrograms={goToMembership}
@@ -116,12 +138,27 @@ export default function App() {
     }
 
     if (route === "/programmes/gallery") {
-      return <Gallery />;
+      return (
+        <>
+          <PageHero
+            title="Our Gallery"
+            parent="Programmes"
+            current="Image Gallery"
+            image={galleryHeroImage}
+          />
+          <Gallery />
+        </>
+      );
     }
 
     if (route === "/contact") {
       return (
         <>
+          <PageHero
+            title="Contact Us"
+            current="Contact"
+            image={contactHeroImage}
+          />
           <Contact />
           <Faq />
         </>
