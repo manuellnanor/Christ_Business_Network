@@ -12,6 +12,38 @@ import heroCommunity from "../assets/hero-community.jpeg";
 import heroEmpoweringProfessionals from "../assets/hero-empowering-professionals.jpg";
 import heroNetworking from "../assets/hero-networking.jpeg";
 import heroPanel from "../assets/hero-panel.jpeg";
+import annualDinner01 from "../assets/gallery/annual-dinner/annual-dinner-01.jpg";
+import annualDinner02 from "../assets/gallery/annual-dinner/annual-dinner-02.jpg";
+import annualDinner03 from "../assets/gallery/annual-dinner/annual-dinner-03.jpg";
+import annualDinner04 from "../assets/gallery/annual-dinner/annual-dinner-04.jpg";
+import annualDinner05 from "../assets/gallery/annual-dinner/annual-dinner-05.jpg";
+import annualDinner06 from "../assets/gallery/annual-dinner/annual-dinner-06.jpg";
+import annualDinner07 from "../assets/gallery/annual-dinner/annual-dinner-07.jpg";
+import annualDinner08 from "../assets/gallery/annual-dinner/annual-dinner-08.jpg";
+import annualDinner09 from "../assets/gallery/annual-dinner/annual-dinner-09.jpg";
+import annualDinner10 from "../assets/gallery/annual-dinner/annual-dinner-10.jpg";
+import annualDinner11 from "../assets/gallery/annual-dinner/annual-dinner-11.jpg";
+import annualDinner12 from "../assets/gallery/annual-dinner/annual-dinner-12.jpg";
+import annualDinner13 from "../assets/gallery/annual-dinner/annual-dinner-13.jpg";
+import annualDinner14 from "../assets/gallery/annual-dinner/annual-dinner-14.jpg";
+import annualDinner15 from "../assets/gallery/annual-dinner/annual-dinner-15.jpg";
+import annualDinner16 from "../assets/gallery/annual-dinner/annual-dinner-16.jpg";
+import annualDinner17 from "../assets/gallery/annual-dinner/annual-dinner-17.jpg";
+import annualDinner18 from "../assets/gallery/annual-dinner/annual-dinner-18.jpg";
+import annualDinner19 from "../assets/gallery/annual-dinner/annual-dinner-19.jpg";
+import annualDinner20 from "../assets/gallery/annual-dinner/annual-dinner-20.jpg";
+import annualDinner21 from "../assets/gallery/annual-dinner/annual-dinner-21.jpg";
+import annualDinner22 from "../assets/gallery/annual-dinner/annual-dinner-22.jpg";
+import annualDinner23 from "../assets/gallery/annual-dinner/annual-dinner-23.jpg";
+import annualDinner24 from "../assets/gallery/annual-dinner/annual-dinner-24.jpg";
+import annualDinner25 from "../assets/gallery/annual-dinner/annual-dinner-25.jpg";
+import annualDinner26 from "../assets/gallery/annual-dinner/annual-dinner-26.jpg";
+import annualDinner27 from "../assets/gallery/annual-dinner/annual-dinner-27.jpg";
+import annualDinner28 from "../assets/gallery/annual-dinner/annual-dinner-28.jpg";
+import annualDinner29 from "../assets/gallery/annual-dinner/annual-dinner-29.jpg";
+import annualDinner30 from "../assets/gallery/annual-dinner/annual-dinner-30.jpg";
+import annualDinner31 from "../assets/gallery/annual-dinner/annual-dinner-31.jpg";
+import annualDinner32 from "../assets/gallery/annual-dinner/annual-dinner-32.jpg";
 
 export interface ServiceItem {
   id: string;
@@ -68,6 +100,43 @@ export interface GalleryImage {
   album: string;
   image: string;
 }
+
+const CBN_ANNUAL_DINNER_ALBUM = "CBN Annual Dinner";
+
+const CBN_ANNUAL_DINNER_IMAGES = [
+  annualDinner01,
+  annualDinner02,
+  annualDinner03,
+  annualDinner04,
+  annualDinner05,
+  annualDinner06,
+  annualDinner07,
+  annualDinner08,
+  annualDinner09,
+  annualDinner10,
+  annualDinner11,
+  annualDinner12,
+  annualDinner13,
+  annualDinner14,
+  annualDinner15,
+  annualDinner16,
+  annualDinner17,
+  annualDinner18,
+  annualDinner19,
+  annualDinner20,
+  annualDinner21,
+  annualDinner22,
+  annualDinner23,
+  annualDinner24,
+  annualDinner25,
+  annualDinner26,
+  annualDinner27,
+  annualDinner28,
+  annualDinner29,
+  annualDinner30,
+  annualDinner31,
+  annualDinner32,
+];
 
 export interface NavLink {
   label: string;
@@ -233,9 +302,9 @@ export const FAQS: FaqItem[] = [
 export const GALLERY_ALBUMS: GalleryAlbum[] = [
   {
     id: "annual-dinner",
-    title: "CBN Annual Dinner",
-    items: 34,
-    image: eventAnnualDinner,
+    title: CBN_ANNUAL_DINNER_ALBUM,
+    items: CBN_ANNUAL_DINNER_IMAGES.length,
+    image: annualDinner32,
   },
   {
     id: "ninth-congress",
@@ -282,7 +351,12 @@ export const GALLERY_ALBUMS: GalleryAlbum[] = [
 ];
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-  { id: "gallery-1", title: "Annual Dinner fellowship", album: "CBN Annual Dinner", image: eventAnnualDinner },
+  ...CBN_ANNUAL_DINNER_IMAGES.map((image, index) => ({
+    id: `annual-dinner-${index + 1}`,
+    title: `CBN Annual Dinner ${index + 1}`,
+    album: CBN_ANNUAL_DINNER_ALBUM,
+    image,
+  })),
   { id: "gallery-2", title: "Congress delegates", album: "CBN 9th Congress", image: eventAnnualCongress },
   { id: "gallery-3", title: "Career mentorship materials", album: "Career Mentorship Session with Accra West T. Youth Ministry", image: eventCareerMentorship },
   { id: "gallery-4", title: "End of year gathering", album: "End of Year Dinner 2024", image: cbnNetworkGroup },
@@ -290,7 +364,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: "gallery-6", title: "Thanksgiving service moment", album: "Thanksgiving Service 2022", image: aboutFellowship },
   { id: "gallery-7", title: "ConvoFeast group session", album: "ConvoFeast 2022", image: aboutNetworking },
   { id: "gallery-8", title: "CASA congress mentoring", album: "Mentoring Session - CASA Congress 2021", image: heroNetworking },
-  { id: "gallery-9", title: "CBN family gathering", album: "CBN Annual Dinner", image: aboutFamily },
+  { id: "gallery-9", title: "CBN family gathering", album: "End of Year Dinner 2024", image: aboutFamily },
   { id: "gallery-10", title: "Professional networking", album: "CBN 9th Congress", image: benefitsNetworking },
   { id: "gallery-11", title: "Fellowship and worship", album: "Thanksgiving Service 2022", image: benefitsFellowship },
   { id: "gallery-12", title: "Welfare and support", album: "ConvoFeast 2022", image: benefitsWelfare },
