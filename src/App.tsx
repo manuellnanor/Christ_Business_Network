@@ -79,6 +79,10 @@ export default function App() {
     navigateTo("/membership");
   };
 
+  const goToAbout = () => {
+    navigateTo("/about");
+  };
+
   const goToContact = () => {
     navigateTo("/contact");
   };
@@ -95,7 +99,7 @@ export default function App() {
             current="About Us"
             image={aboutHeroImage}
           />
-          <About onLearnMoreClick={goToContact} />
+          <About onLearnMoreClick={goToAbout} />
           <WatchStory />
           <Objectives />
           <WhyChooseUs onContactClick={goToContact} />
@@ -167,7 +171,7 @@ export default function App() {
 
     return (
       <>
-        <Hero onDonateClick={goToMembership} onWatchStoryClick={goToContact} />
+        <Hero onDonateClick={goToMembership} onWatchStoryClick={goToAbout} />
         <About onLearnMoreClick={goToContact} />
         <WatchStory />
         <Objectives />

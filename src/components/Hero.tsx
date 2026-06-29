@@ -46,7 +46,7 @@ const HERO_SLIDES: Slide[] = [
   }
 ];
 
-export default function Hero({ onDonateClick }: HeroProps) {
+export default function Hero({ onDonateClick, onWatchStoryClick }: HeroProps) {
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -83,10 +83,7 @@ export default function Hero({ onDonateClick }: HeroProps) {
     if (actionType === "membership") {
       onDonateClick();
     } else {
-      const el = document.getElementById("about");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
+      onWatchStoryClick();
     }
   };
 

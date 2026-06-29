@@ -95,7 +95,7 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                 <button
                   type="button"
                   onClick={() => setActiveDropdown(activeDropdown === "programmes" ? null : "programmes")}
-                  className={`nav-menu-link inline-flex items-center gap-1.5 text-[14px] font-medium hover:text-[#D53F34] transition-colors ${
+                  className={`nav-menu-link inline-flex items-center gap-1.5 text-[14px] font-normal hover:text-[#D53F34] transition-colors ${
                     isActive(link.href, link.children) ? "nav-menu-link-active" : "text-[#0C024B]"
                   }`}
                 >
@@ -119,7 +119,7 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                             e.preventDefault();
                             handleLinkClick(child.href);
                           }}
-                          className={`block rounded-xl px-4 py-3 font-sans text-[14px] font-medium transition-colors ${
+                          className={`block rounded-xl px-4 py-3 font-sans text-[14px] font-normal transition-colors ${
                             isActive(child.href)
                               ? "bg-brand-accent text-brand-red"
                               : "text-brand-navy hover:bg-gray-50 hover:text-brand-red"
@@ -140,7 +140,7 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                   e.preventDefault();
                   handleLinkClick(link.href);
                 }}
-                className={`nav-menu-link text-[14px] font-medium hover:text-[#D53F34] transition-colors ${
+                className={`nav-menu-link text-[14px] font-normal hover:text-[#D53F34] transition-colors ${
                   isActive(link.href) ? "nav-menu-link-active" : "text-[#0C024B]"
                 }`}
               >
@@ -197,7 +197,7 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                       <button
                         type="button"
                         onClick={() => setActiveDropdown(activeDropdown === "programmes" ? null : "programmes")}
-                        className={`nav-menu-link flex w-full items-center justify-between text-[14px] font-medium transition-colors ${
+                        className={`nav-menu-link flex w-full items-center justify-between text-[14px] font-normal transition-colors ${
                           isActive(link.href, link.children)
                             ? "nav-menu-link-active"
                             : "text-[#0C024B] hover:text-[#D53F34]"
@@ -223,7 +223,7 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                                     e.preventDefault();
                                     handleLinkClick(child.href);
                                   }}
-                                  className={`block rounded-xl px-4 py-2.5 font-sans text-[14px] font-medium transition-colors ${
+                                  className={`block rounded-xl px-4 py-2.5 font-sans text-[14px] font-normal transition-colors ${
                                     isActive(child.href)
                                       ? "bg-white text-brand-red shadow-sm"
                                       : "text-brand-navy hover:bg-white hover:text-brand-red"
@@ -244,7 +244,7 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                         e.preventDefault();
                         handleLinkClick(link.href);
                       }}
-                      className={`nav-menu-link block py-2 transition-colors ${
+                      className={`nav-menu-link block py-2 text-[14px] font-normal transition-colors ${
                         isActive(link.href)
                           ? "nav-menu-link-active"
                           : "text-[#0C024B] hover:text-[#D53F34]"
