@@ -249,16 +249,16 @@ const loadGalleryImages = (glob: Record<string, { default: string }>) =>
     .map((path) => glob[path].default);
 
 const CAREER_MENTORSHIP_IMAGES = loadGalleryImages(
-  import.meta.globEager("../assets/gallery/career-mentorship/*.{jpg,jpeg,png}") as Record<string, { default: string }>
+  import.meta.glob("../assets/gallery/career-mentorship/*.{jpg,jpeg,png}", { eager: true }) as Record<string, { default: string }>
 );
 const CBN_8TH_CONGRESS_IMAGES = loadGalleryImages(
-  import.meta.globEager("../assets/gallery/cbn-8th-congress/*.{jpg,jpeg,png}") as Record<string, { default: string }>
+  import.meta.glob("../assets/gallery/cbn-8th-congress/*.{jpg,jpeg,png}", { eager: true }) as Record<string, { default: string }>
 );
 const END_OF_YEAR_DINNER_IMAGES = loadGalleryImages(
-  import.meta.globEager("../assets/gallery/end-of-year-dinner/*.{jpg,jpeg,png}") as Record<string, { default: string }>
+  import.meta.glob("../assets/gallery/end-of-year-dinner/*.{jpg,jpeg,png}", { eager: true }) as Record<string, { default: string }>
 );
 const THANKSGIVING_IMAGES = loadGalleryImages(
-  import.meta.globEager("../assets/gallery/thanksgiving/*.{jpg,jpeg,png}") as Record<string, { default: string }>
+  import.meta.glob("../assets/gallery/thanksgiving/*.{jpg,jpeg,png}", { eager: true }) as Record<string, { default: string }>
 );
 
 export interface NavLink {

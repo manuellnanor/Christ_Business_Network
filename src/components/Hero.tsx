@@ -172,7 +172,7 @@ export default function Hero({ onDonateClick }: HeroProps) {
                   <div className="pt-2">
                     <button
                       onClick={() => handleButtonClick(activeSlide.actionType)}
-                      className="position-aware-btn group flex items-center gap-2 bg-brand-red text-white px-8 py-4 rounded-full font-sans font-bold text-base transition-all duration-300 hover:shadow-xl hover:shadow-brand-red/30 active:scale-95 w-full sm:w-auto justify-center"
+                      className="position-aware-btn group flex items-center gap-2 bg-brand-red text-white px-8 py-4 rounded-full font-sans font-medium text-[14px] transition-all duration-300 hover:shadow-xl hover:shadow-brand-red/30 active:scale-95 w-full sm:w-auto justify-center"
                     >
                       <span>{activeSlide.buttonText}</span>
                       <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
