@@ -172,7 +172,7 @@ export default function App() {
     return (
       <>
         <Hero onDonateClick={goToMembership} onWatchStoryClick={goToAbout} />
-        <About onLearnMoreClick={goToContact} />
+        <About onLearnMoreClick={goToAbout} />
         <WatchStory />
         <Objectives />
         <WhyChooseUs onContactClick={goToContact} />
