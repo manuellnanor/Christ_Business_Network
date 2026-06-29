@@ -261,6 +261,10 @@ const THANKSGIVING_IMAGES = loadGalleryImages(
   import.meta.glob("../assets/gallery/thanksgiving/*.{jpg,jpeg,png}", { eager: true }) as Record<string, { default: string }>
 );
 
+const END_OF_YEAR_DINNER_CARD_IMAGE = END_OF_YEAR_DINNER_IMAGES[0] ?? cbnNetworkGroup;
+const CBN_8TH_CONGRESS_CARD_IMAGE = CBN_8TH_CONGRESS_IMAGES[0] ?? heroPanel;
+const THANKSGIVING_CARD_IMAGE = THANKSGIVING_IMAGES[0] ?? aboutFellowship;
+
 export interface NavLink {
   label: string;
   href: string;
@@ -445,19 +449,19 @@ export const GALLERY_ALBUMS: GalleryAlbum[] = [
     id: "end-of-year-dinner",
     title: END_OF_YEAR_DINNER_ALBUM,
     items: END_OF_YEAR_DINNER_IMAGES.length,
-    image: cbnNetworkGroup,
+    image: END_OF_YEAR_DINNER_CARD_IMAGE,
   },
   {
     id: "eighth-congress",
     title: CBN_8TH_CONGRESS_ALBUM,
     items: CBN_8TH_CONGRESS_IMAGES.length,
-    image: heroPanel,
+    image: CBN_8TH_CONGRESS_CARD_IMAGE,
   },
   {
     id: "thanksgiving-service",
     title: THANKSGIVING_ALBUM,
     items: THANKSGIVING_IMAGES.length,
-    image: aboutFellowship,
+    image: THANKSGIVING_CARD_IMAGE,
   },
   {
     id: "convofeast",
