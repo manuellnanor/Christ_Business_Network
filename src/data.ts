@@ -44,6 +44,54 @@ import annualDinner29 from "../assets/gallery/annual-dinner/annual-dinner-29.jpg
 import annualDinner30 from "../assets/gallery/annual-dinner/annual-dinner-30.jpg";
 import annualDinner31 from "../assets/gallery/annual-dinner/annual-dinner-31.jpg";
 import annualDinner32 from "../assets/gallery/annual-dinner/annual-dinner-32.jpg";
+import congress01 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-01.jpg";
+import congress02 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-02.jpg";
+import congress03 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-03.jpg";
+import congress04 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-04.jpg";
+import congress05 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-05.jpg";
+import congress06 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-06.jpg";
+import congress07 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-07.jpg";
+import congress08 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-08.jpg";
+import congress09 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-09.jpg";
+import congress10 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-10.jpg";
+import congress11 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-11.jpg";
+import congress12 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-12.jpg";
+import congress13 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-13.jpg";
+import congress14 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-14.jpg";
+import congress15 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-15.jpg";
+import congress16 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-16.jpg";
+import congress17 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-17.jpg";
+import congress18 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-18.jpg";
+import congress19 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-19.jpg";
+import congress20 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-20.jpg";
+import congress21 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-21.jpg";
+import congress22 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-22.jpg";
+import congress23 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-23.jpg";
+import congress24 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-24.jpg";
+import congress25 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-25.jpg";
+import congress26 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-26.jpg";
+import congress27 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-27.jpg";
+import congress28 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-28.jpg";
+import congress29 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-29.jpg";
+import congress30 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-30.jpg";
+import congress31 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-31.jpg";
+import congress32 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-32.jpg";
+import congress33 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-33.jpg";
+import congress34 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-34.jpg";
+import congress35 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-35.jpg";
+import congress36 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-36.jpg";
+import congress37 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-37.jpg";
+import congress38 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-38.jpg";
+import congress39 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-39.jpg";
+import congress40 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-40.jpg";
+import congress41 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-41.jpg";
+import congress42 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-42.jpg";
+import congress43 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-43.jpg";
+import congress44 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-44.jpg";
+import congress45 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-45.jpg";
+import congress46 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-46.jpg";
+import congress47 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-47.jpg";
+import congress48 from "../assets/gallery/cbn-9th-congress/cbn-9th-congress-48.jpg";
 
 export interface ServiceItem {
   id: string;
@@ -102,6 +150,7 @@ export interface GalleryImage {
 }
 
 const CBN_ANNUAL_DINNER_ALBUM = "CBN Annual Dinner";
+const CBN_9TH_CONGRESS_ALBUM = "CBN 9th Congress";
 
 const CBN_ANNUAL_DINNER_IMAGES = [
   annualDinner01,
@@ -137,6 +186,80 @@ const CBN_ANNUAL_DINNER_IMAGES = [
   annualDinner31,
   annualDinner32,
 ];
+
+const CBN_9TH_CONGRESS_IMAGES = [
+  congress01,
+  congress02,
+  congress03,
+  congress04,
+  congress05,
+  congress06,
+  congress07,
+  congress08,
+  congress09,
+  congress10,
+  congress11,
+  congress12,
+  congress13,
+  congress14,
+  congress15,
+  congress16,
+  congress17,
+  congress18,
+  congress19,
+  congress20,
+  congress21,
+  congress22,
+  congress23,
+  congress24,
+  congress25,
+  congress26,
+  congress27,
+  congress28,
+  congress29,
+  congress30,
+  congress31,
+  congress32,
+  congress33,
+  congress34,
+  congress35,
+  congress36,
+  congress37,
+  congress38,
+  congress39,
+  congress40,
+  congress41,
+  congress42,
+  congress43,
+  congress44,
+  congress45,
+  congress46,
+  congress47,
+  congress48,
+];
+
+const CAREER_MENTORSHIP_ALBUM = "Career Mentorship Session with Accra West T. Youth Ministry";
+const CBN_8TH_CONGRESS_ALBUM = "CBN 8th Annual Congress 2024";
+const END_OF_YEAR_DINNER_ALBUM = "End of Year Dinner 2024";
+const THANKSGIVING_ALBUM = "Thanksgiving Service 2022";
+
+const loadGalleryImages = (glob: Record<string, { default: string }>) =>
+  Object.keys(glob)
+    .sort()
+    .map((path) => glob[path].default);
+
+const CAREER_MENTORSHIP_IMAGES = loadGalleryImages(
+  import.meta.globEager("../assets/gallery/career-mentorship/*.{jpg,jpeg,png}") as Record<string, { default: string }>
+);
+const CBN_8TH_CONGRESS_IMAGES = loadGalleryImages(
+  import.meta.globEager("../assets/gallery/cbn-8th-congress/*.{jpg,jpeg,png}") as Record<string, { default: string }>
+);
+const END_OF_YEAR_DINNER_IMAGES = loadGalleryImages(
+  import.meta.globEager("../assets/gallery/end-of-year-dinner/*.{jpg,jpeg,png}") as Record<string, { default: string }>
+);
+const THANKSGIVING_IMAGES = loadGalleryImages(
+  import.meta.globEager("../assets/gallery/thanksgiving/*.{jpg,jpeg,png}") as Record<string, { default: string }>
+);
 
 export interface NavLink {
   label: string;
@@ -308,32 +431,32 @@ export const GALLERY_ALBUMS: GalleryAlbum[] = [
   },
   {
     id: "ninth-congress",
-    title: "CBN 9th Congress",
-    items: 49,
+    title: CBN_9TH_CONGRESS_ALBUM,
+    items: CBN_9TH_CONGRESS_IMAGES.length,
     image: eventAnnualCongress,
   },
   {
     id: "career-mentorship",
-    title: "Career Mentorship Session with Accra West T. Youth Ministry",
-    items: 71,
+    title: CAREER_MENTORSHIP_ALBUM,
+    items: CAREER_MENTORSHIP_IMAGES.length,
     image: eventCareerMentorship,
   },
   {
     id: "end-of-year-dinner",
-    title: "End of Year Dinner 2024",
-    items: 113,
+    title: END_OF_YEAR_DINNER_ALBUM,
+    items: END_OF_YEAR_DINNER_IMAGES.length,
     image: cbnNetworkGroup,
   },
   {
     id: "eighth-congress",
-    title: "CBN 8th Annual Congress 2024",
-    items: 66,
+    title: CBN_8TH_CONGRESS_ALBUM,
+    items: CBN_8TH_CONGRESS_IMAGES.length,
     image: heroPanel,
   },
   {
     id: "thanksgiving-service",
-    title: "Thanksgiving Service 2022",
-    items: 23,
+    title: THANKSGIVING_ALBUM,
+    items: THANKSGIVING_IMAGES.length,
     image: aboutFellowship,
   },
   {
@@ -357,19 +480,38 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     album: CBN_ANNUAL_DINNER_ALBUM,
     image,
   })),
-  { id: "gallery-2", title: "Congress delegates", album: "CBN 9th Congress", image: eventAnnualCongress },
-  { id: "gallery-3", title: "Career mentorship materials", album: "Career Mentorship Session with Accra West T. Youth Ministry", image: eventCareerMentorship },
-  { id: "gallery-4", title: "End of year gathering", album: "End of Year Dinner 2024", image: cbnNetworkGroup },
-  { id: "gallery-5", title: "Annual congress session", album: "CBN 8th Annual Congress 2024", image: heroPanel },
-  { id: "gallery-6", title: "Thanksgiving service moment", album: "Thanksgiving Service 2022", image: aboutFellowship },
+  ...CBN_9TH_CONGRESS_IMAGES.map((image, index) => ({
+    id: `cbn-9th-congress-${index + 1}`,
+    title: `CBN 9th Congress ${index + 1}`,
+    album: CBN_9TH_CONGRESS_ALBUM,
+    image,
+  })),
+  ...CAREER_MENTORSHIP_IMAGES.map((image, index) => ({
+    id: `career-mentorship-${index + 1}`,
+    title: `Career Mentorship ${index + 1}`,
+    album: CAREER_MENTORSHIP_ALBUM,
+    image,
+  })),
+  ...CBN_8TH_CONGRESS_IMAGES.map((image, index) => ({
+    id: `cbn-8th-congress-${index + 1}`,
+    title: `CBN 8th Congress ${index + 1}`,
+    album: CBN_8TH_CONGRESS_ALBUM,
+    image,
+  })),
+  ...END_OF_YEAR_DINNER_IMAGES.map((image, index) => ({
+    id: `end-of-year-dinner-${index + 1}`,
+    title: `End of Year Dinner ${index + 1}`,
+    album: END_OF_YEAR_DINNER_ALBUM,
+    image,
+  })),
+  ...THANKSGIVING_IMAGES.map((image, index) => ({
+    id: `thanksgiving-${index + 1}`,
+    title: `Thanksgiving Service ${index + 1}`,
+    album: THANKSGIVING_ALBUM,
+    image,
+  })),
   { id: "gallery-7", title: "ConvoFeast group session", album: "ConvoFeast 2022", image: aboutNetworking },
   { id: "gallery-8", title: "CASA congress mentoring", album: "Mentoring Session - CASA Congress 2021", image: heroNetworking },
-  { id: "gallery-9", title: "CBN family gathering", album: "End of Year Dinner 2024", image: aboutFamily },
-  { id: "gallery-10", title: "Professional networking", album: "CBN 9th Congress", image: benefitsNetworking },
-  { id: "gallery-11", title: "Fellowship and worship", album: "Thanksgiving Service 2022", image: benefitsFellowship },
-  { id: "gallery-12", title: "Welfare and support", album: "ConvoFeast 2022", image: benefitsWelfare },
-  { id: "gallery-13", title: "Community impact", album: "Career Mentorship Session with Accra West T. Youth Ministry", image: heroCommunity },
-  { id: "gallery-14", title: "Empowered professionals", album: "Mentoring Session - CASA Congress 2021", image: heroEmpoweringProfessionals },
 ];
 
 export const BLOGS: BlogItem[] = [
