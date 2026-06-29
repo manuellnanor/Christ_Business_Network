@@ -243,14 +243,6 @@ export default function Gallery() {
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/78 to-transparent">
-                    <h3 className="font-display font-bold text-white text-sm leading-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-white/75 font-sans text-[11px] leading-snug mt-1">
-                      {item.album}
-                    </p>
-                  </div>
                 </motion.button>
               ))}
             </div>
