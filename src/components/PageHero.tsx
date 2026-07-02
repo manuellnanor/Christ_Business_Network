@@ -28,7 +28,7 @@ export default function PageHero({ title, current, image, parent }: PageHeroProp
             transition={{ duration: 0.55 }}
             className="max-w-3xl"
           >
-            <h1 className="font-display text-5xl font-extrabold leading-none text-white sm:text-6xl lg:text-7xl">
+            <h1 className="font-display text-5xl font-semibold leading-none text-white sm:text-6xl lg:text-7xl">
               {title}
             </h1>
             <nav

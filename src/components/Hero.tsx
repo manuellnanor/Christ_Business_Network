@@ -156,7 +156,7 @@ export default function Hero({ onDonateClick, onWatchStoryClick }: HeroProps) {
                   className="space-y-6"
                 >
                   {/* Dynamic H1 */}
-                  <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white leading-tight tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]">
+                  <h1 className="font-display font-semibold text-4xl sm:text-5xl md:text-6xl text-white leading-tight tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]">
                     {activeSlide.title}
                   </h1>
 
