@@ -12,6 +12,12 @@ const securityHeaders = {
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 };
 
+const devSecurityHeaders = {
+  ...securityHeaders,
+  'Content-Security-Policy':
+    "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://images.unsplash.com https://img.icons8.com; connect-src 'self' ws: wss:; upgrade-insecure-requests",
+};
+
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss()],
@@ -26,7 +32,7 @@ export default defineConfig(() => {
       hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
-      headers: securityHeaders,
+      headers: devSecurityHeaders,
     },
     preview: {
       headers: securityHeaders,
