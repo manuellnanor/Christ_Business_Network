@@ -1,5 +1,5 @@
 import { ArrowUpRight, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type TouchEvent } from "react";
 import teamJoseph from "../../assets/team-joseph-antwi.png";
 import teamAnthony from "../../assets/team-anthony-arthur.jpg";
 import teamFrancis from "../../assets/team-francis-donkor.jpeg";
@@ -62,6 +62,9 @@ const TEAM_MEMBERS = [
 export default function Team() {
   const [active, setActive] = useState(0);
   const [selectedMember, setSelectedMember] = useState<(typeof TEAM_MEMBERS)[number] | null>(null);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const didSwipe = useRef(false);
 
   useEffect(() => {
     const desktopQuery = window.matchMedia("(min-width: 1024px)");
@@ -98,6 +101,43 @@ export default function Team() {
     };
   }, [selectedMember]);
 
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(min-width: 1024px)").matches) {
+      return;
+    }
+
+    didSwipe.current = false;
+    touchStartX.current = event.touches[0].clientX;
+    touchStartY.current = event.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(min-width: 1024px)").matches) {
+      return;
+    }
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX.current;
+    const deltaY = touch.clientY - touchStartY.current;
+
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) {
+      return;
+    }
+
+    didSwipe.current = true;
+    setActive((current) => {
+      if (deltaX < 0) {
+        return (current + 1) % TEAM_MEMBERS.length;
+      }
+
+      return (current - 1 + TEAM_MEMBERS.length) % TEAM_MEMBERS.length;
+    });
+
+    window.setTimeout(() => {
+      didSwipe.current = false;
+    }, 0);
+  };
+
   return (
     <section id="team" className="py-24 bg-brand-gray overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,7 +163,11 @@ export default function Team() {
           </div>
         </div>
 
-        <div className="overflow-hidden">
+        <div
+          className="overflow-hidden touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <div
             className="team-slider-track flex transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(calc(var(--team-step) * -${active}))` }}
@@ -135,7 +179,13 @@ export default function Team() {
               >
                 <button
                   type="button"
-                  onClick={() => setSelectedMember(member)}
+                  onClick={() => {
+                    if (didSwipe.current) {
+                      return;
+                    }
+
+                    setSelectedMember(member);
+                  }}
                   aria-label={`View ${member.name} profile`}
                   className="relative h-[430px] w-full rounded-2xl overflow-hidden bg-brand-dark shadow-sm group text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
                 >
@@ -186,7 +236,7 @@ export default function Team() {
           onMouseDown={() => setSelectedMember(null)}
         >
           <div
-            className="relative grid w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-[28px] bg-white shadow-2xl md:h-[560px] md:grid-cols-[0.92fr_1.08fr]"
+            className="relative grid h-[92vh] w-full max-w-4xl grid-rows-[280px_minmax(0,1fr)] overflow-hidden rounded-[28px] bg-white shadow-2xl md:h-[560px] md:grid-cols-[0.92fr_1.08fr] md:grid-rows-none"
             onMouseDown={(event) => event.stopPropagation()}
           >
             <div className="relative h-[280px] overflow-hidden bg-brand-dark md:h-full">
