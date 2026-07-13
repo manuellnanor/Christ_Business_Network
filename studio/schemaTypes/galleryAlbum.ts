@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {BulkGalleryImagesInput} from '../components/BulkGalleryImagesInput'
 
 export default defineType({
   name: 'galleryAlbum',
@@ -64,6 +65,9 @@ export default defineType({
       name: 'images',
       title: 'Album Images',
       type: 'array',
+      components: {
+        input: BulkGalleryImagesInput,
+      },
       of: [
         defineArrayMember({
           name: 'galleryImage',
