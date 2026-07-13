@@ -1,13 +1,31 @@
 import { ArrowUpRight, Calendar } from "lucide-react";
-import { PROGRAMS } from "../data";
 import { motion } from "motion/react";
+import type { SanityEvent } from "../sanity/types";
 
 interface ProgramsProps {
+  programs: SanityEvent[];
+  loading?: boolean;
+  error?: string | null;
   onProgramClick: (programId: string) => void;
   onViewAllPrograms: () => void;
 }
 
-export default function UpcomingPrograms({ onProgramClick, onViewAllPrograms }: ProgramsProps) {
+const formatEventDate = (startDate: string, endDate?: string) => {
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  const start = new Date(startDate);
+  if (Number.isNaN(start.getTime())) return startDate;
+
+  const end = endDate ? new Date(endDate) : null;
+  return end && !Number.isNaN(end.getTime())
+    ? `${formatter.format(start)} – ${formatter.format(end)}`
+    : formatter.format(start);
+};
+
+export default function UpcomingPrograms({ programs, loading, error, onProgramClick, onViewAllPrograms }: ProgramsProps) {
   return (
     <section id="programmes" className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,10 +56,15 @@ export default function UpcomingPrograms({ onProgramClick, onViewAllPrograms }: 
         </div>
 
         {/* 3 Column Program Cards */}
+        {loading && <p className="text-gray-500">Loading events…</p>}
+        {error && <p role="alert" className="text-brand-red">{error}</p>}
+        {!loading && !error && programs.length === 0 && (
+          <p className="text-gray-500">There are no published events yet.</p>
+        )}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {PROGRAMS.map((program) => (
+          {programs.map((program) => (
             <motion.div
-              key={program.id}
+              key={program._id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -53,13 +76,13 @@ export default function UpcomingPrograms({ onProgramClick, onViewAllPrograms }: 
                 <div className="h-52 w-full overflow-hidden relative">
                   <img
                     src={program.image}
-                    alt={program.title}
+                    alt={program.imageAlt || program.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     referrerPolicy="no-referrer"
                   />
                   {/* Category overlay */}
                   <span className="absolute top-4 left-4 bg-brand-red text-white px-3 py-1 rounded-full font-sans font-bold text-xs">
-                    {program.category}
+                    {program.category || "Event"}
                   </span>
                 </div>
 
@@ -68,7 +91,7 @@ export default function UpcomingPrograms({ onProgramClick, onViewAllPrograms }: 
                   {/* Date Badge */}
                   <div className="flex items-center gap-2 text-gray-500 text-xs font-sans font-semibold">
                     <Calendar className="w-4 h-4 text-brand-red" />
-                    <span>{program.date}</span>
+                    <span>{formatEventDate(program.startDate, program.endDate)}</span>
                   </div>
 
                   <h3 className="font-display font-bold text-lg text-brand-dark leading-snug group-hover:text-brand-red transition-colors">
@@ -76,7 +99,7 @@ export default function UpcomingPrograms({ onProgramClick, onViewAllPrograms }: 
                   </h3>
 
                   <p className="text-gray-600 font-sans text-xs leading-relaxed line-clamp-3">
-                    {program.description}
+                    {program.excerpt}
                   </p>
                 </div>
               </div>
@@ -84,7 +107,7 @@ export default function UpcomingPrograms({ onProgramClick, onViewAllPrograms }: 
               {/* Bottom CTA Button */}
               <div className="p-6 pt-0">
                 <button
-                  onClick={() => onProgramClick(program.id)}
+                  onClick={() => onProgramClick(program._id)}
                   className="w-full flex items-center justify-between border-t border-gray-50 pt-4 text-brand-dark hover:text-brand-red font-sans font-semibold text-xs tracking-wider uppercase group/btn"
                 >
                   Read More

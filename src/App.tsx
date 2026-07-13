@@ -15,7 +15,6 @@ import Contact from "./components/Contact";
 import Faq from "./components/Faq";
 import Footer from "./components/Footer";
 
-import { PROGRAMS } from "./data";
 import { X, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import aboutHeroImage from "../assets/about-networking.jpeg";
@@ -23,6 +22,9 @@ import membershipHeroImage from "../assets/benefits-networking.jpeg";
 import eventsHeroImage from "../assets/event-annual-congress.jpg";
 import galleryHeroImage from "../assets/gallery/annual-dinner/annual-dinner-32.jpg";
 import contactHeroImage from "../assets/cbn-network-group.jpg";
+import { fetchEvents } from "./sanity/services";
+import type { SanityEvent } from "./sanity/types";
+import { PortableText } from "@portabletext/react";
 
 type AppRoute = "/" | "/about" | "/membership" | "/programmes/events" | "/programmes/gallery" | "/contact";
 
@@ -50,6 +52,26 @@ export default function App() {
   // Modal states for dynamic items
   const [activeProgramId, setActiveProgramId] = useState<string | null>(null);
   const [route, setRoute] = useState<AppRoute>(getCurrentRoute);
+  const [programs, setPrograms] = useState<SanityEvent[]>([]);
+  const [eventsLoading, setEventsLoading] = useState(true);
+  const [eventsError, setEventsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    fetchEvents()
+      .then((events) => {
+        if (active) setPrograms(events);
+      })
+      .catch((error) => {
+        console.error("Unable to load Sanity events", error);
+        if (active) setEventsError("Events could not be loaded. Please try again shortly.");
+      })
+      .finally(() => {
+        if (active) setEventsLoading(false);
+      });
+
+    return () => { active = false; };
+  }, []);
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -88,7 +110,7 @@ export default function App() {
   };
 
   // Find records
-  const activeProgram = PROGRAMS.find((p) => p.id === activeProgramId);
+  const activeProgram = programs.find((program) => program._id === activeProgramId);
 
   const renderPage = () => {
     if (route === "/about") {
@@ -133,6 +155,9 @@ export default function App() {
             image={eventsHeroImage}
           />
           <UpcomingPrograms
+            programs={programs}
+            loading={eventsLoading}
+            error={eventsError}
             onProgramClick={(id) => setActiveProgramId(id)}
             onViewAllPrograms={goToMembership}
           />
@@ -177,6 +202,9 @@ export default function App() {
         <Objectives />
         <WhyChooseUs onContactClick={goToContact} />
         <UpcomingPrograms
+          programs={programs.slice(0, 3)}
+          loading={eventsLoading}
+          error={eventsError}
           onProgramClick={(id) => setActiveProgramId(id)}
           onViewAllPrograms={() => navigateTo("/programmes/events")}
         />
@@ -246,17 +274,20 @@ export default function App() {
               <div className="p-8 space-y-6">
                 <div className="flex items-center gap-3 text-xs text-gray-500 font-sans font-semibold">
                   <Calendar className="w-4.5 h-4.5 text-brand-red" />
-                  <span>Scheduled date: <strong>{activeProgram.date}</strong></span>
+                  <span>Scheduled date: <strong>{new Date(activeProgram.startDate).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</strong></span>
                 </div>
 
-                <p className="text-gray-600 font-sans text-sm leading-relaxed">
-                  {activeProgram.description}
-                </p>
+                <div className="text-gray-600 font-sans text-sm leading-relaxed space-y-3">
+                  {activeProgram.details?.length ? (
+                    <PortableText value={activeProgram.details} />
+                  ) : (
+                    <p>{activeProgram.excerpt}</p>
+                  )}
+                </div>
 
                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 text-xs font-sans text-gray-500 space-y-1">
-                  <p>📍 Location: Community Activity Center & Field Chapters</p>
-                  <p>⏰ Entry duration: 9:00 AM - 4:00 PM</p>
-                  <p>🎟️ Admission: Free & fully supported by individual donations</p>
+                  {activeProgram.location && <p>📍 Location: {activeProgram.location}</p>}
+                  {activeProgram.organizer && <p>Organiser: {activeProgram.organizer}</p>}
                 </div>
 
                 <div className="flex gap-4">
@@ -268,12 +299,16 @@ export default function App() {
                   </button>
                   <button
                     onClick={() => {
-                      setActiveProgramId(null);
-                      goToMembership();
+                      if (activeProgram.registrationLink) {
+                        window.open(activeProgram.registrationLink, "_blank", "noopener,noreferrer");
+                      } else {
+                        setActiveProgramId(null);
+                        goToMembership();
+                      }
                     }}
                     className="flex-1 bg-brand-red hover:bg-brand-red/95 text-white font-sans font-bold py-3 rounded-xl text-sm transition-all"
                   >
-                    Fund This Event
+                    {activeProgram.registrationLink ? "Register" : "Support This Event"}
                   </button>
                 </div>
               </div>

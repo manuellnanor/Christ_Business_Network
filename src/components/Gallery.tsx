@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ChevronLeft, ChevronRight, Image, Images, Search, X } from "lucide-react";
 import { motion } from "motion/react";
-import { GALLERY_ALBUMS, GALLERY_IMAGES } from "../data";
+import { fetchGalleryAlbums } from "../sanity/services";
+import type { SanityGalleryAlbum } from "../sanity/types";
 
 type GalleryTab = "albums" | "images";
 
@@ -11,23 +12,54 @@ export default function Gallery() {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [draftSearch, setDraftSearch] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [albums, setAlbums] = useState<SanityGalleryAlbum[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    fetchGalleryAlbums()
+      .then((result) => {
+        if (active) setAlbums(result);
+      })
+      .catch((error) => {
+        console.error("Unable to load Sanity gallery", error);
+        if (active) setLoadError("The gallery could not be loaded. Please try again shortly.");
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => { active = false; };
+  }, []);
 
   const normalizedSearch = searchTerm.trim().toLowerCase();
 
   const filteredAlbums = useMemo(() => {
     if (!normalizedSearch) {
-      return GALLERY_ALBUMS;
+      return albums;
     }
 
-    return GALLERY_ALBUMS.filter((album) =>
+    return albums.filter((album) =>
       album.title.toLowerCase().includes(normalizedSearch)
     );
-  }, [normalizedSearch]);
+  }, [albums, normalizedSearch]);
+
+  const allImages = useMemo(() => albums.flatMap((album) =>
+    (album.images || []).map((item) => ({
+      id: `${album._id}-${item._key}`,
+      albumId: album._id,
+      album: album.title,
+      title: item.caption || album.title,
+      image: item.image,
+      alt: item.alt || item.caption || album.title,
+    })),
+  ), [albums]);
 
   const filteredImages = useMemo(() => {
     const baseImages = selectedAlbum
-      ? GALLERY_IMAGES.filter((item) => item.album === selectedAlbum)
-      : GALLERY_IMAGES;
+      ? allImages.filter((item) => item.albumId === selectedAlbum)
+      : allImages;
 
     if (!normalizedSearch) {
       return baseImages;
@@ -38,7 +70,9 @@ export default function Gallery() {
         item.title.toLowerCase().includes(normalizedSearch) ||
         item.album.toLowerCase().includes(normalizedSearch)
     );
-  }, [normalizedSearch, selectedAlbum]);
+  }, [allImages, normalizedSearch, selectedAlbum]);
+
+  const selectedAlbumTitle = albums.find((album) => album._id === selectedAlbum)?.title;
 
   const handleSearch = () => {
     setSearchTerm(draftSearch);
@@ -174,11 +208,17 @@ export default function Gallery() {
           </button>
         </div>
 
+        {loading && <p className="text-gray-500">Loading gallery…</p>}
+        {loadError && <p role="alert" className="text-brand-red">{loadError}</p>}
+        {!loading && !loadError && albums.length === 0 && (
+          <p className="text-gray-500">There are no published gallery albums yet.</p>
+        )}
+
         {activeTab === "albums" ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredAlbums.map((album, index) => (
               <motion.article
-                key={album.id}
+                key={album._id}
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -186,14 +226,14 @@ export default function Gallery() {
                 className="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:border-brand-red/20 transition-all cursor-pointer"
                 onClick={() => {
                   setActiveTab("images");
-                  setSelectedAlbum(album.title);
+                  setSelectedAlbum(album._id);
                   setSelectedImageIndex(null);
                 }}
               >
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
-                    src={album.image}
-                    alt={album.title}
+                    src={album.coverImage}
+                    alt={album.coverImageAlt || album.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
@@ -202,7 +242,7 @@ export default function Gallery() {
                     {album.title}
                   </h3>
                   <p className="text-gray-500 font-sans text-sm mt-1">
-                    {album.items} Items
+                    {album.images?.length || 0} Items
                   </p>
                 </div>
               </motion.article>
@@ -223,7 +263,7 @@ export default function Gallery() {
                   <ArrowLeft className="w-4 h-4" />
                   Back to albums
                 </button>
-                <span className="text-gray-500">Showing images for {selectedAlbum}</span>
+                <span className="text-gray-500">Showing images for {selectedAlbumTitle}</span>
               </div>
             )}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -240,7 +280,7 @@ export default function Gallery() {
                 >
                   <img
                     src={item.image}
-                    alt={item.title}
+                    alt={item.alt}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </motion.button>
@@ -290,7 +330,7 @@ export default function Gallery() {
           >
             <img
               src={selectedImage.image}
-              alt={selectedImage.title}
+              alt={selectedImage.alt}
               className="mx-auto max-h-[78vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl"
             />
             <figcaption className="mt-4 text-center text-white">
