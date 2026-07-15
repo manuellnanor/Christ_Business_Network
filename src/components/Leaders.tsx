@@ -75,7 +75,7 @@ export default function Leaders() {
               type="button"
               onClick={() => setSelectedLeader(leader)}
               aria-label={`View ${leader.name} profile`}
-              className="group relative h-[430px] overflow-hidden rounded-3xl bg-brand-dark text-left shadow-sm transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
+              className="group relative h-[300px] overflow-hidden rounded-3xl bg-brand-dark text-left shadow-sm transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
             >
               {leader.image ? (
                 <img

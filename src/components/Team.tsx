@@ -187,7 +187,7 @@ export default function Team() {
                     setSelectedMember(member);
                   }}
                   aria-label={`View ${member.name} profile`}
-                  className="relative h-[430px] w-full rounded-2xl overflow-hidden bg-brand-dark shadow-sm group text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
+                  className="relative h-[300px] w-full rounded-2xl overflow-hidden bg-brand-dark shadow-sm group text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
                 >
                   <img
                     src={member.image}
