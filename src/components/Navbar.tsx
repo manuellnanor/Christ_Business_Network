@@ -12,7 +12,7 @@ interface NavbarProps {
 export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<"programmes" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -89,22 +89,25 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
         {/* Center: Desktop Nav Links */}
         <div className="hidden lg:flex items-center gap-8 relative">
           
-          {NAV_LINKS.map((link) => (
+          {NAV_LINKS.map((link) => {
+            const dropdownId = link.label.toLowerCase().replace(/\s+/g, "-");
+
+            return (
             link.children ? (
               <div key={link.label} className="relative">
                 <button
                   type="button"
-                  onClick={() => setActiveDropdown(activeDropdown === "programmes" ? null : "programmes")}
+                  onClick={() => setActiveDropdown(activeDropdown === dropdownId ? null : dropdownId)}
                   className={`nav-menu-link inline-flex items-center gap-1.5 text-[14px] font-semibold hover:text-[#D53F34] transition-colors ${
                     isActive(link.href, link.children) ? "nav-menu-link-active" : "text-[#0C024B]"
                   }`}
                 >
                   {link.label}
-                  <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === "programmes" ? "rotate-180" : ""}`} />
+                  <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === dropdownId ? "rotate-180" : ""}`} />
                 </button>
 
                 <AnimatePresence>
-                  {activeDropdown === "programmes" && (
+                  {activeDropdown === dropdownId && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -147,7 +150,8 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                 {link.label}
               </a>
             )
-          ))}
+            );
+          })}
 
         </div>
 
@@ -187,7 +191,10 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
             className="lg:hidden absolute top-[105%] left-0 right-0 bg-white border border-gray-100 rounded-[24px] shadow-2xl py-5 px-6 space-y-4 overflow-hidden z-50"
           >
             <div className="flex flex-col gap-1.5">
-              {NAV_LINKS.map((link, index) => (
+              {NAV_LINKS.map((link, index) => {
+                const dropdownId = link.label.toLowerCase().replace(/\s+/g, "-");
+
+                return (
                 <div
                   key={link.label}
                   className={index === NAV_LINKS.length - 1 ? "" : "border-b border-gray-50"}
@@ -196,7 +203,7 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                     <div className="py-2">
                       <button
                         type="button"
-                        onClick={() => setActiveDropdown(activeDropdown === "programmes" ? null : "programmes")}
+                        onClick={() => setActiveDropdown(activeDropdown === dropdownId ? null : dropdownId)}
                         className={`nav-menu-link flex w-full items-center justify-between text-[14px] font-semibold transition-colors ${
                           isActive(link.href, link.children)
                             ? "nav-menu-link-active"
@@ -204,10 +211,10 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                         }`}
                       >
                         {link.label}
-                        <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === "programmes" ? "rotate-180" : ""}`} />
+                        <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === dropdownId ? "rotate-180" : ""}`} />
                       </button>
                       <AnimatePresence>
-                        {activeDropdown === "programmes" && (
+                        {activeDropdown === dropdownId && (
                           <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
@@ -254,7 +261,8 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                     </a>
                   )}
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             <button

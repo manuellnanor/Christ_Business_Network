@@ -7,6 +7,7 @@ import Objectives from "./components/Objectives";
 import WhyChooseUs from "./components/WhyChooseUs";
 import WatchStory from "./components/WatchStory";
 import Team from "./components/Team";
+import Leaders from "./components/Leaders";
 import UpcomingPrograms from "./components/UpcomingPrograms";
 import DonationWidget from "./components/DonationWidget";
 import Gallery from "./components/Gallery";
@@ -26,13 +27,14 @@ import { fetchEvents } from "./sanity/services";
 import type { SanityEvent } from "./sanity/types";
 import { PortableText } from "@portabletext/react";
 
-type AppRoute = "/" | "/about" | "/membership" | "/programmes/events" | "/programmes/gallery" | "/contact";
+type AppRoute = "/" | "/about" | "/leaders" | "/membership" | "/programmes/events" | "/programmes/gallery" | "/contact";
 
 const getCurrentRoute = (): AppRoute => {
   const route = window.location.hash.replace("#", "") || "/";
   const validRoutes: AppRoute[] = [
     "/",
     "/about",
+    "/leaders",
     "/membership",
     "/programmes/events",
     "/programmes/gallery",
@@ -140,6 +142,21 @@ export default function App() {
             image={membershipHeroImage}
           />
           <DonationWidget />
+          <Faq />
+        </>
+      );
+    }
+
+    if (route === "/leaders") {
+      return (
+        <>
+          <PageHero
+            title="Our Leaders"
+            parent="About CBN"
+            current="Leaders"
+            image={aboutHeroImage}
+          />
+          <Leaders />
           <Faq />
         </>
       );

@@ -45,3 +45,22 @@ export const galleryAlbumsQuery = defineQuery(`
     }
   }
 `)
+
+export const leadersQuery = defineQuery(`
+  *[
+    _type == "leader" &&
+    isPublished != false
+  ] | order(displayOrder asc, name asc) {
+    _id,
+    name,
+    title,
+    role,
+    qualification,
+    employment,
+    assembly,
+    "image": portrait.asset->url,
+    "imageAlt": portrait.alt,
+    bio,
+    displayOrder
+  }
+`)

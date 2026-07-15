@@ -34,3 +34,17 @@ export interface SanityGalleryAlbum {
   category?: string
   images?: SanityGalleryImage[]
 }
+
+export interface SanityLeader {
+  _id: string
+  name: string
+  title?: string
+  role: string
+  qualification?: string
+  employment?: string
+  assembly?: string
+  image?: string
+  imageAlt?: string
+  bio?: Array<{_type: string; _key?: string; [key: string]: unknown}>
+  displayOrder?: number
+}

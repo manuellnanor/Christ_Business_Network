@@ -273,7 +273,14 @@ export interface NavLink {
 
 export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "#/" },
-  { label: "About CBN", href: "#/about" },
+  {
+    label: "About CBN",
+    href: "#/about",
+    children: [
+      { label: "About Us", href: "#/about" },
+      { label: "Leaders", href: "#/leaders" },
+    ],
+  },
   { label: "Membership", href: "#/membership" },
   {
     label: "Programmes",
