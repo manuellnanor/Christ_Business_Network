@@ -6,7 +6,7 @@ export default defineCliConfig({
     dataset: 'production'
   },
   deployment: {
-    studioHost: 'christ-business-network',
+    appId: 'gqvcfezrxcr4vcq2fta741wi',
     /**
      * Enable auto-updates for studios.
      * Learn more at https://www.sanity.io/docs/studio/latest-version-of-sanity#k47faf43faf56
