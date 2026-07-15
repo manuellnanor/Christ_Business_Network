@@ -1,67 +1,13 @@
 import {PortableText} from '@portabletext/react'
 import {ArrowUpRight, X} from 'lucide-react'
 import {useEffect, useState} from 'react'
-import teamAaron from '../../assets/team-aaron-akutteh.jpeg'
-import teamAnthony from '../../assets/team-anthony-arthur.jpg'
-import teamFrancis from '../../assets/team-francis-donkor.jpeg'
-import teamJoseph from '../../assets/team-joseph-antwi.png'
-import teamRacheal from '../../assets/team-racheal-boateng.jpeg'
 import {fetchLeaders} from '../sanity/services'
 import type {SanityLeader} from '../sanity/types'
 
-const PLACEHOLDER_LEADERS: SanityLeader[] = [
-  {
-    _id: 'placeholder-joseph',
-    name: 'Joseph Antwi',
-    title: 'Mr',
-    role: 'Senior Policy Analyst',
-    qualification: 'Research and Policy Analysis',
-    employment: 'Government of Alberta, Canada',
-    assembly: 'Assin Akropong',
-    image: teamJoseph,
-  },
-  {
-    _id: 'placeholder-anthony',
-    name: 'Anthony Kobina Odum Arthur',
-    title: 'Elder',
-    role: 'Marketing Consultant',
-    qualification: 'Chartered Marketer, MCIM',
-    assembly: 'Living Spring Assembly, New Mamprobi Area',
-    image: teamAnthony,
-  },
-  {
-    _id: 'placeholder-francis',
-    name: 'Francis Donkor',
-    title: 'Mr',
-    role: 'Auditor',
-    qualification: 'ACCA',
-    employment: 'BDO UK, Bridgewater House, Bristol - UK',
-    assembly: 'Odorkor Central',
-    image: teamFrancis,
-  },
-  {
-    _id: 'placeholder-aaron',
-    name: 'Aaron Akusem Akutteh',
-    title: 'Ing.',
-    role: 'Regional Engineer, Ashanti Region',
-    qualification: 'GHIE PE',
-    employment: 'National Communications Authority',
-    assembly: 'Santasi, Daaban Area',
-    image: teamAaron,
-  },
-  {
-    _id: 'placeholder-racheal',
-    name: 'Racheal Boateng',
-    title: 'Ms',
-    role: 'Journalist',
-    qualification: 'Journalist',
-    assembly: 'Upper Room Assembly, Odorkor Branch',
-    image: teamRacheal,
-  },
-]
-
 export default function Leaders() {
-  const [leaders, setLeaders] = useState<SanityLeader[]>(PLACEHOLDER_LEADERS)
+  const [leaders, setLeaders] = useState<SanityLeader[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [selectedLeader, setSelectedLeader] = useState<SanityLeader | null>(null)
 
   useEffect(() => {
@@ -69,9 +15,15 @@ export default function Leaders() {
 
     fetchLeaders()
       .then((sanityLeaders) => {
-        if (active && sanityLeaders.length > 0) setLeaders(sanityLeaders)
+        if (active) setLeaders(sanityLeaders)
       })
-      .catch((error) => console.error('Unable to load Sanity leaders', error))
+      .catch((fetchError) => {
+        console.error('Unable to load Sanity leaders', fetchError)
+        if (active) setError('Leadership profiles could not be loaded. Please try again shortly.')
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
 
     return () => {
       active = false
@@ -110,7 +62,13 @@ export default function Leaders() {
           </p>
         </div>
 
-        <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        {loading && <p className="text-center text-gray-600">Loading leadership profiles...</p>}
+        {error && <p className="text-center text-brand-red">{error}</p>}
+        {!loading && !error && leaders.length === 0 && (
+          <p className="text-center text-gray-600">Leadership profiles will be published soon.</p>
+        )}
+
+        <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
           {leaders.map((leader) => (
             <button
               key={leader._id}
