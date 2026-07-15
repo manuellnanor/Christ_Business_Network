@@ -111,10 +111,10 @@ export default function Leaders() {
           onMouseDown={() => setSelectedLeader(null)}
         >
           <div
-            className="relative grid max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-[28px] bg-white shadow-2xl md:grid-cols-[0.92fr_1.08fr]"
+            className="relative grid h-[92vh] w-full max-w-4xl grid-rows-[280px_minmax(0,1fr)] overflow-hidden rounded-[28px] bg-white shadow-2xl md:h-[560px] md:grid-cols-[0.92fr_1.08fr] md:grid-rows-none"
             onMouseDown={(event) => event.stopPropagation()}
           >
-            <div className="relative min-h-[260px] bg-brand-dark md:min-h-[570px]">
+            <div className="relative h-[280px] overflow-hidden bg-brand-dark md:h-full">
               {selectedLeader.image ? (
                 <img
                   src={selectedLeader.image}
@@ -128,8 +128,8 @@ export default function Leaders() {
               )}
             </div>
 
-            <div className="min-h-0 overflow-y-auto px-6 py-7 sm:px-9 sm:py-9">
-              <div className="flex items-start justify-between gap-4">
+            <div className="flex min-h-0 flex-col overflow-y-auto px-6 py-7 sm:px-9 sm:py-9">
+              <div className="mb-5 flex items-start justify-between gap-4">
                 <div>
                   <span className="rounded-full bg-brand-accent px-3 py-1 font-sans text-xs font-semibold text-brand-red">
                     Leadership Profile
