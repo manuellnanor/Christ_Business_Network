@@ -77,7 +77,14 @@ export const articlesQuery = defineQuery(`
     "image": featuredImage.asset->url,
     "imageAlt": featuredImage.alt,
     excerpt,
-    body,
+    body[]{
+      ...,
+      _type == "image" => {
+        "url": asset->url,
+        "lqip": asset->metadata.lqip,
+        "dimensions": asset->metadata.dimensions
+      }
+    },
     author,
     category,
     tags,

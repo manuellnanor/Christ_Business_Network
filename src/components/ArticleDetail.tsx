@@ -1,4 +1,4 @@
-import {PortableText} from '@portabletext/react'
+import {PortableText, type PortableTextComponents} from '@portabletext/react'
 import {ArrowLeft, Calendar, UserRound} from 'lucide-react'
 import type {SanityArticle} from '../sanity/types'
 
@@ -7,6 +7,42 @@ interface ArticleDetailProps {
   loading: boolean
   error: string | null
   onBack: () => void
+}
+
+interface ArticleBodyImage {
+  url?: string
+  alt?: string
+  caption?: string
+  lqip?: string
+  dimensions?: {width: number; height: number}
+}
+
+const articleBodyComponents: PortableTextComponents = {
+  types: {
+    image: ({value}) => {
+      const image = value as ArticleBodyImage
+      if (!image.url) return null
+
+      return (
+        <figure className="my-10 overflow-hidden rounded-3xl bg-brand-gray">
+          <img
+            src={image.url}
+            alt={image.alt || ''}
+            width={image.dimensions?.width}
+            height={image.dimensions?.height}
+            loading="lazy"
+            className="h-auto w-full object-cover"
+            style={image.lqip ? {backgroundImage: `url(${image.lqip})`, backgroundSize: 'cover'} : undefined}
+          />
+          {image.caption && (
+            <figcaption className="px-5 py-3 text-center font-sans text-sm text-gray-500">
+              {image.caption}
+            </figcaption>
+          )}
+        </figure>
+      )
+    },
+  },
 }
 
 export default function ArticleDetail({article, loading, error, onBack}: ArticleDetailProps) {
@@ -45,7 +81,11 @@ export default function ArticleDetail({article, loading, error, onBack}: Article
         </button>
         {article.excerpt && <p className="mb-10 border-l-4 border-brand-red pl-6 font-display text-xl font-medium leading-relaxed text-brand-dark">{article.excerpt}</p>}
         <div className="font-sans text-base leading-8 text-gray-600 [&_a]:text-brand-red [&_h2]:mb-4 [&_h2]:mt-10 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-bold [&_h2]:text-brand-dark [&_p]:mb-6">
-          {article.body?.length ? <PortableText value={article.body} /> : <p>Article content will be added soon.</p>}
+          {article.body?.length ? (
+            <PortableText value={article.body} components={articleBodyComponents} />
+          ) : (
+            <p>Article content will be added soon.</p>
+          )}
         </div>
       </div>
     </article>

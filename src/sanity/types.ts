@@ -56,7 +56,16 @@ export interface SanityArticle {
   image?: string
   imageAlt?: string
   excerpt?: string
-  body?: Array<{_type: string; _key?: string; [key: string]: unknown}>
+  body?: Array<{
+    _type: string
+    _key?: string
+    url?: string
+    alt?: string
+    caption?: string
+    lqip?: string
+    dimensions?: {width: number; height: number; aspectRatio?: number}
+    [key: string]: unknown
+  }>
   author?: string
   category?: string
   tags?: string[]
