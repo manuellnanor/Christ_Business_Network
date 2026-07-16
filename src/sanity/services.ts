@@ -1,6 +1,6 @@
 import {sanityClient} from './client'
-import {eventsQuery, galleryAlbumsQuery, leadersQuery} from './queries'
-import type {SanityEvent, SanityGalleryAlbum, SanityLeader} from './types'
+import {articlesQuery, eventsQuery, galleryAlbumsQuery, leadersQuery} from './queries'
+import type {SanityArticle, SanityEvent, SanityGalleryAlbum, SanityLeader} from './types'
 
 export function fetchEvents() {
   return sanityClient.fetch<SanityEvent[]>(eventsQuery)
@@ -12,4 +12,8 @@ export function fetchGalleryAlbums() {
 
 export function fetchLeaders() {
   return sanityClient.fetch<SanityLeader[]>(leadersQuery)
+}
+
+export function fetchArticles() {
+  return sanityClient.fetch<SanityArticle[]>(articlesQuery)
 }

@@ -283,11 +283,12 @@ export const NAV_LINKS: NavLink[] = [
   },
   { label: "Membership", href: "#/membership" },
   {
-    label: "Programmes",
+    label: "Programmes and Resources",
     href: "#/programmes/events",
     children: [
       { label: "Events", href: "#/programmes/events" },
       { label: "Gallery", href: "#/programmes/gallery" },
+      { label: "Articles", href: "#/resources/articles" },
     ],
   },
   { label: "Contact", href: "#/contact" },

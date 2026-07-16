@@ -48,3 +48,19 @@ export interface SanityLeader {
   bio?: Array<{_type: string; _key?: string; [key: string]: unknown}>
   displayOrder?: number
 }
+
+export interface SanityArticle {
+  _id: string
+  title: string
+  slug: string
+  image?: string
+  imageAlt?: string
+  excerpt?: string
+  body?: Array<{_type: string; _key?: string; [key: string]: unknown}>
+  author?: string
+  category?: string
+  tags?: string[]
+  publishedAt?: string
+  seoTitle?: string
+  seoDescription?: string
+}

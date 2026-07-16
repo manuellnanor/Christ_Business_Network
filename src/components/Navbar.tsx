@@ -53,7 +53,10 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
 
   const isActive = (href: string, children?: { href: string }[]) => {
     const route = href.replace("#", "");
-    return currentRoute === route || Boolean(children?.some((child) => currentRoute === child.href.replace("#", "")));
+    const matchesRoute = (candidate: string) =>
+      currentRoute === candidate || (candidate !== "/" && currentRoute.startsWith(`${candidate}/`));
+
+    return matchesRoute(route) || Boolean(children?.some((child) => matchesRoute(child.href.replace("#", ""))));
   };
 
   return (
@@ -81,13 +84,13 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
             <img
               src={cbnLogo}
               alt="Christ Business Network"
-              className="h-9 w-auto max-w-[168px] sm:h-10 sm:max-w-[224px] lg:max-w-[264px] object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+              className="h-9 w-auto max-w-[168px] sm:h-10 sm:max-w-[224px] lg:max-w-[210px] xl:max-w-[264px] object-contain transition-transform duration-300 group-hover:scale-[1.02]"
             />
           </a>
         </div>
 
         {/* Center: Desktop Nav Links */}
-        <div className="hidden lg:flex items-center gap-8 relative">
+        <div className="relative hidden items-center gap-5 lg:flex xl:gap-8">
           
           {NAV_LINKS.map((link) => {
             const dropdownId = link.label.toLowerCase().replace(/\s+/g, "-");
@@ -98,7 +101,7 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
                 <button
                   type="button"
                   onClick={() => setActiveDropdown(activeDropdown === dropdownId ? null : dropdownId)}
-                  className={`nav-menu-link inline-flex items-center gap-1.5 text-[14px] font-semibold hover:text-[#D53F34] transition-colors ${
+                  className={`nav-menu-link inline-flex items-center gap-1.5 whitespace-nowrap text-[14px] font-semibold hover:text-[#D53F34] transition-colors ${
                     isActive(link.href, link.children) ? "nav-menu-link-active" : "text-[#0C024B]"
                   }`}
                 >

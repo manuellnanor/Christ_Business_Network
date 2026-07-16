@@ -12,6 +12,8 @@ import UpcomingPrograms from "./components/UpcomingPrograms";
 import DonationWidget from "./components/DonationWidget";
 import Gallery from "./components/Gallery";
 import Contact from "./components/Contact";
+import Articles from "./components/Articles";
+import ArticleDetail from "./components/ArticleDetail";
 
 import Faq from "./components/Faq";
 import Footer from "./components/Footer";
@@ -23,11 +25,11 @@ import membershipHeroImage from "../assets/benefits-networking.jpeg";
 import eventsHeroImage from "../assets/event-annual-congress.jpg";
 import galleryHeroImage from "../assets/gallery/annual-dinner/annual-dinner-32.jpg";
 import contactHeroImage from "../assets/cbn-network-group.jpg";
-import { fetchEvents } from "./sanity/services";
-import type { SanityEvent } from "./sanity/types";
+import { fetchArticles, fetchEvents } from "./sanity/services";
+import type { SanityArticle, SanityEvent } from "./sanity/types";
 import { PortableText } from "@portabletext/react";
 
-type AppRoute = "/" | "/about" | "/leaders" | "/membership" | "/programmes/events" | "/programmes/gallery" | "/contact";
+type AppRoute = "/" | "/about" | "/leaders" | "/membership" | "/programmes/events" | "/programmes/gallery" | "/resources/articles" | `/resources/articles/${string}` | "/contact";
 
 const getCurrentRoute = (): AppRoute => {
   const route = window.location.hash.replace("#", "") || "/";
@@ -38,10 +40,16 @@ const getCurrentRoute = (): AppRoute => {
     "/membership",
     "/programmes/events",
     "/programmes/gallery",
+    "/resources/articles",
     "/contact",
   ];
 
-  return validRoutes.includes(route as AppRoute) ? (route as AppRoute) : "/";
+  if (validRoutes.includes(route as AppRoute)) return route as AppRoute;
+  if (route.startsWith("/resources/articles/") && route.split("/").filter(Boolean).length === 3) {
+    return route as AppRoute;
+  }
+
+  return "/";
 };
 
 const resetPageScroll = () => {
@@ -57,6 +65,9 @@ export default function App() {
   const [programs, setPrograms] = useState<SanityEvent[]>([]);
   const [eventsLoading, setEventsLoading] = useState(true);
   const [eventsError, setEventsError] = useState<string | null>(null);
+  const [articles, setArticles] = useState<SanityArticle[]>([]);
+  const [articlesLoading, setArticlesLoading] = useState(true);
+  const [articlesError, setArticlesError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -70,6 +81,23 @@ export default function App() {
       })
       .finally(() => {
         if (active) setEventsLoading(false);
+      });
+
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    fetchArticles()
+      .then((publishedArticles) => {
+        if (active) setArticles(publishedArticles);
+      })
+      .catch((error) => {
+        console.error("Unable to load Sanity articles", error);
+        if (active) setArticlesError("Articles could not be loaded. Please try again shortly.");
+      })
+      .finally(() => {
+        if (active) setArticlesLoading(false);
       });
 
     return () => { active = false; };
@@ -167,7 +195,7 @@ export default function App() {
         <>
           <PageHero
             title="Events"
-            parent="Programmes"
+            parent="Programmes and Resources"
             current="Events"
             image={eventsHeroImage}
           />
@@ -188,12 +216,44 @@ export default function App() {
         <>
           <PageHero
             title="Our Gallery"
-            parent="Programmes"
+            parent="Programmes and Resources"
             current="Image Gallery"
             image={galleryHeroImage}
           />
           <Gallery />
         </>
+      );
+    }
+
+    if (route === "/resources/articles") {
+      return (
+        <>
+          <PageHero
+            title="Articles"
+            parent="Programmes and Resources"
+            current="Articles"
+            image={aboutHeroImage}
+          />
+          <Articles
+            articles={articles}
+            loading={articlesLoading}
+            error={articlesError}
+            onArticleClick={(slug) => navigateTo(`/resources/articles/${slug}`)}
+          />
+          <Faq />
+        </>
+      );
+    }
+
+    if (route.startsWith("/resources/articles/")) {
+      const slug = route.replace("/resources/articles/", "");
+      return (
+        <ArticleDetail
+          article={articles.find((article) => article.slug === slug)}
+          loading={articlesLoading}
+          error={articlesError}
+          onBack={() => navigateTo("/resources/articles")}
+        />
       );
     }
 

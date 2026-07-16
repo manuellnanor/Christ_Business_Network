@@ -64,3 +64,25 @@ export const leadersQuery = defineQuery(`
     displayOrder
   }
 `)
+
+export const articlesQuery = defineQuery(`
+  *[
+    _type == "article" &&
+    isPublished != false &&
+    defined(slug.current)
+  ] | order(publishedAt desc, _createdAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    "image": featuredImage.asset->url,
+    "imageAlt": featuredImage.alt,
+    excerpt,
+    body,
+    author,
+    category,
+    tags,
+    publishedAt,
+    seoTitle,
+    seoDescription
+  }
+`)
