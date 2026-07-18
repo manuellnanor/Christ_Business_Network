@@ -145,7 +145,7 @@ export default function Team() {
           <div className="lg:col-span-6 space-y-5">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white text-brand-dark font-sans font-semibold text-sm shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-red"></span>
-              Our Team
+              MEMBERS
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-brand-dark leading-tight">
               Working together to serve Christ and society
@@ -157,7 +157,7 @@ export default function Team() {
               From professional mentorship to fellowship and service, our team works together to strengthen the CBN community and create meaningful impact.
             </p>
             <button className="position-aware-btn group inline-flex items-center gap-2 bg-brand-red text-white px-8 py-4 rounded-full font-sans font-semibold text-sm transition-all duration-300">
-              View All Team
+              View All Members
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </button>
           </div>
@@ -187,7 +187,7 @@ export default function Team() {
                     setSelectedMember(member);
                   }}
                   aria-label={`View ${member.name} profile`}
-                  className="relative h-[300px] w-full rounded-2xl overflow-hidden bg-brand-dark shadow-sm group text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
+                  className="group relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-brand-dark text-left shadow-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
                 >
                   <img
                     src={member.image}
@@ -252,7 +252,7 @@ export default function Team() {
               <div className="mb-5 flex items-start justify-between gap-4">
                 <div>
                   <span className="inline-flex items-center rounded-full bg-brand-accent px-3 py-1 font-sans text-xs font-semibold text-brand-red">
-                    Team Member
+                    MEMBER
                   </span>
                   <h3 id="team-member-modal-title" className="mt-4 font-display text-3xl font-bold leading-tight text-brand-dark sm:text-4xl">
                     {selectedMember.name}
@@ -265,7 +265,7 @@ export default function Team() {
                 <button
                   type="button"
                   onClick={() => setSelectedMember(null)}
-                  aria-label="Close team member profile"
+                  aria-label="Close member profile"
                   className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-gray text-brand-dark transition-colors hover:bg-brand-dark hover:text-white focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
                 >
                   <X className="h-5 w-5" />
