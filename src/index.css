@@ -36,34 +36,6 @@ p.text-gray-600 {
   color: rgb(213, 63, 52);
 }
 
-.team-slider-track {
-  --team-step: calc(100% + 2rem);
-}
-
-.team-slide {
-  flex: 0 0 100%;
-}
-
-@media (min-width: 640px) {
-  .team-slider-track {
-    --team-step: calc(50% + 1rem);
-  }
-
-  .team-slide {
-    flex-basis: calc(50% - 1rem);
-  }
-}
-
-@media (min-width: 1024px) {
-  .team-slider-track {
-    --team-step: calc(25% + 0.5rem);
-  }
-
-  .team-slide {
-    flex-basis: calc(25% - 1.5rem);
-  }
-}
-
 .position-aware-btn {
   position: relative;
   isolation: isolate;

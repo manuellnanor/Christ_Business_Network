@@ -156,7 +156,6 @@ export default function App() {
           <Objectives />
           <WhyChooseUs onContactClick={goToContact} />
           <Team />
-          <Faq />
         </>
       );
     }

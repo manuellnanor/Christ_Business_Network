@@ -1,5 +1,5 @@
-import { ArrowUpRight, X } from "lucide-react";
-import { useEffect, useRef, useState, type TouchEvent } from "react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import teamJoseph from "../../assets/team-joseph-antwi.png";
 import teamAnthony from "../../assets/team-anthony-arthur.jpg";
 import teamFrancis from "../../assets/team-francis-donkor.jpeg";
@@ -60,25 +60,9 @@ const TEAM_MEMBERS = [
 ];
 
 export default function Team() {
-  const [active, setActive] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [cardsPerPage, setCardsPerPage] = useState(4);
   const [selectedMember, setSelectedMember] = useState<(typeof TEAM_MEMBERS)[number] | null>(null);
-  const touchStartX = useRef(0);
-  const touchStartY = useRef(0);
-  const didSwipe = useRef(false);
-
-  useEffect(() => {
-    const desktopQuery = window.matchMedia("(min-width: 1024px)");
-
-    if (desktopQuery.matches) {
-      return;
-    }
-
-    const interval = window.setInterval(() => {
-      setActive((current) => (current + 1) % TEAM_MEMBERS.length);
-    }, 4200);
-
-    return () => window.clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (!selectedMember) {
@@ -101,41 +85,13 @@ export default function Team() {
     };
   }, [selectedMember]);
 
-  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
-    if (window.matchMedia("(min-width: 1024px)").matches) {
-      return;
-    }
+  const totalPages = Math.ceil(TEAM_MEMBERS.length / cardsPerPage);
+  const pageStart = (currentPage - 1) * cardsPerPage;
+  const visibleMembers = TEAM_MEMBERS.slice(pageStart, pageStart + cardsPerPage);
 
-    didSwipe.current = false;
-    touchStartX.current = event.touches[0].clientX;
-    touchStartY.current = event.touches[0].clientY;
-  };
-
-  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
-    if (window.matchMedia("(min-width: 1024px)").matches) {
-      return;
-    }
-
-    const touch = event.changedTouches[0];
-    const deltaX = touch.clientX - touchStartX.current;
-    const deltaY = touch.clientY - touchStartY.current;
-
-    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) {
-      return;
-    }
-
-    didSwipe.current = true;
-    setActive((current) => {
-      if (deltaX < 0) {
-        return (current + 1) % TEAM_MEMBERS.length;
-      }
-
-      return (current - 1 + TEAM_MEMBERS.length) % TEAM_MEMBERS.length;
-    });
-
-    window.setTimeout(() => {
-      didSwipe.current = false;
-    }, 0);
+  const changeCardsPerPage = (value: number) => {
+    setCardsPerPage(value);
+    setCurrentPage(1);
   };
 
   return (
@@ -156,74 +112,78 @@ export default function Team() {
             <p className="text-gray-600 font-sans text-base leading-relaxed">
               From professional mentorship to fellowship and service, our team works together to strengthen the CBN community and create meaningful impact.
             </p>
-            <button className="position-aware-btn group inline-flex items-center gap-2 bg-brand-red text-white px-8 py-4 rounded-full font-sans font-semibold text-sm transition-all duration-300">
-              View All Members
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
           </div>
         </div>
 
-        <div
-          className="overflow-hidden touch-pan-y"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div
-            className="team-slider-track flex transition-transform duration-700 ease-in-out"
-            style={{ transform: `translateX(calc(var(--team-step) * -${active}))` }}
-          >
-            {TEAM_MEMBERS.concat(TEAM_MEMBERS).map((member, index) => (
-              <div
-                key={`${member.name}-${index}`}
-                className="team-slide mr-8"
-              >
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (didSwipe.current) {
-                      return;
-                    }
-
-                    setSelectedMember(member);
-                  }}
-                  aria-label={`View ${member.name} profile`}
-                  className="group relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-brand-dark text-left shadow-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
-                >
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/35 to-transparent"></div>
-                  <div className="absolute left-8 right-8 bottom-8 text-white">
-                    <h3 className="font-display font-bold text-xl leading-tight">
-                      {member.name}
-                    </h3>
-                    <div className="h-px bg-white/15 my-4"></div>
-                    <p className="text-white font-sans text-sm leading-relaxed">
-                      {member.role}
-                    </p>
-                  </div>
-                  <span className="absolute right-6 top-6 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/95 text-brand-dark shadow-sm opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 group-focus-visible:opacity-100">
-                    <ArrowUpRight className="h-5 w-5" />
-                  </span>
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex items-center justify-center gap-2 mt-10">
-          {TEAM_MEMBERS.map((member, index) => (
+        <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+          {visibleMembers.map((member) => (
             <button
               key={member.name}
-              onClick={() => setActive(index)}
-              aria-label={`Show ${member.name}`}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                active === index ? "w-8 bg-brand-red" : "w-2 bg-gray-300 hover:bg-gray-400"
-              }`}
-            />
+              type="button"
+              onClick={() => setSelectedMember(member)}
+              aria-label={`View ${member.name} profile`}
+              className="group relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-brand-dark text-left shadow-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
+            >
+              <img
+                src={member.image}
+                alt={member.name}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/35 to-transparent"></div>
+              <div className="absolute bottom-8 left-8 right-8 text-white">
+                <h3 className="font-display text-xl font-bold leading-tight">
+                  {member.name}
+                </h3>
+                <div className="my-4 h-px bg-white/15"></div>
+                <p className="font-sans text-sm leading-relaxed text-white">
+                  {member.role}
+                </p>
+              </div>
+              <span className="absolute right-6 top-6 inline-flex h-11 w-11 translate-y-2 items-center justify-center rounded-full bg-white/95 text-brand-dark opacity-0 shadow-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:opacity-100">
+                <ArrowUpRight className="h-5 w-5" />
+              </span>
+            </button>
           ))}
+        </div>
+
+        <div className="mt-10 flex flex-col items-center justify-between gap-5 border-t border-gray-200 pt-7 sm:flex-row">
+          <label className="flex items-center gap-3 font-sans text-sm font-semibold text-brand-dark">
+            Cards per page
+            <select
+              value={cardsPerPage}
+              onChange={(event) => changeCardsPerPage(Number(event.target.value))}
+              className="rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-red/20"
+              aria-label="Cards per page"
+            >
+              {[4, 8, 12].map((amount) => (
+                <option key={amount} value={amount}>{amount}</option>
+              ))}
+            </select>
+          </label>
+
+          <nav className="flex flex-wrap items-center justify-center gap-2" aria-label="Members pagination">
+            <button
+              type="button"
+              onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+              disabled={currentPage === 1}
+              className="inline-flex items-center gap-1 rounded-full border border-gray-300 bg-white px-4 py-2 font-sans text-sm font-semibold text-brand-dark transition hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-300 disabled:hover:text-brand-dark"
+            >
+              <ChevronLeft className="h-4 w-4" /> Previous
+            </button>
+
+            <span className="min-w-24 text-center font-sans text-sm font-semibold text-gray-600">
+              Page {currentPage} of {totalPages}
+            </span>
+
+            <button
+              type="button"
+              onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+              disabled={currentPage === totalPages}
+              className="inline-flex items-center gap-1 rounded-full border border-gray-300 bg-white px-4 py-2 font-sans text-sm font-semibold text-brand-dark transition hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-300 disabled:hover:text-brand-dark"
+            >
+              Next <ChevronRight className="h-4 w-4" />
+            </button>
+          </nav>
         </div>
       </div>
 
