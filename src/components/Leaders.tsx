@@ -68,14 +68,14 @@ export default function Leaders() {
           <p className="text-center text-gray-600">Leadership profiles will be published soon.</p>
         )}
 
-        <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mobile-card-scroll -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 scroll-smooth sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-7 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
           {leaders.map((leader) => (
             <button
               key={leader._id}
               type="button"
               onClick={() => setSelectedLeader(leader)}
               aria-label={`View ${leader.name} profile`}
-              className="group relative aspect-[3/4] overflow-hidden rounded-3xl bg-brand-dark text-left shadow-sm transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
+              className="group relative aspect-[3/4] w-full min-w-[82%] snap-start overflow-hidden rounded-3xl bg-brand-dark text-left shadow-sm transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35 sm:min-w-0"
             >
               {leader.image ? (
                 <img

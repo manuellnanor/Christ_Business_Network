@@ -36,6 +36,15 @@ p.text-gray-600 {
   color: rgb(213, 63, 52);
 }
 
+.mobile-card-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.mobile-card-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .position-aware-btn {
   position: relative;
   isolation: isolate;

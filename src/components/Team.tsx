@@ -56,6 +56,7 @@ export default function Team() {
   const totalPages = Math.max(1, Math.ceil(members.length / cardsPerPage));
   const pageStart = (currentPage - 1) * cardsPerPage;
   const visibleMembers = members.slice(pageStart, pageStart + cardsPerPage);
+  const visibleMemberIds = new Set(visibleMembers.map((member) => member._id));
 
   const changeCardsPerPage = (value: number) => {
     setCardsPerPage(value);
@@ -89,14 +90,16 @@ export default function Team() {
           <p className="text-center text-gray-600">Member profiles will be published soon.</p>
         )}
 
-        <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
-          {visibleMembers.map((member) => (
+        <div className="mobile-card-scroll -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 scroll-smooth sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-7 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
+          {members.map((member) => (
             <button
-              key={member.name}
+              key={member._id}
               type="button"
               onClick={() => setSelectedMember(member)}
               aria-label={`View ${member.name} profile`}
-              className="group relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-brand-dark text-left shadow-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
+              className={`group relative aspect-[3/4] w-full min-w-[82%] snap-start overflow-hidden rounded-2xl bg-brand-dark text-left shadow-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35 sm:min-w-0 ${
+                visibleMemberIds.has(member._id) ? "" : "sm:hidden"
+              }`}
             >
               {member.image ? (
                 <img
@@ -127,7 +130,7 @@ export default function Team() {
         </div>
 
         {!loading && !error && members.length > 0 && (
-          <div className="mt-10 flex flex-col items-center justify-between gap-5 border-t border-gray-200 pt-7 sm:flex-row">
+          <div className="mt-10 hidden items-center justify-between gap-5 border-t border-gray-200 pt-7 sm:flex">
             <label className="flex items-center gap-3 font-sans text-sm font-semibold text-brand-dark">
               Cards per page
               <select
