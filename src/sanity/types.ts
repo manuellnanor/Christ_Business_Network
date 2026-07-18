@@ -49,6 +49,20 @@ export interface SanityLeader {
   displayOrder?: number
 }
 
+export interface SanityMember {
+  _id: string
+  name: string
+  title?: string
+  role: string
+  qualification?: string
+  employment?: string
+  assembly?: string
+  image?: string
+  imageAlt?: string
+  bio?: Array<{_type: string; _key?: string; [key: string]: unknown}>
+  displayOrder?: number
+}
+
 export interface SanityArticle {
   _id: string
   title: string

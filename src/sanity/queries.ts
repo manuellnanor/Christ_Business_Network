@@ -65,6 +65,25 @@ export const leadersQuery = defineQuery(`
   }
 `)
 
+export const membersQuery = defineQuery(`
+  *[
+    _type == "member" &&
+    isPublished != false
+  ] | order(displayOrder asc, name asc) {
+    _id,
+    name,
+    title,
+    role,
+    qualification,
+    employment,
+    assembly,
+    "image": portrait.asset->url,
+    "imageAlt": portrait.alt,
+    bio,
+    displayOrder
+  }
+`)
+
 export const articlesQuery = defineQuery(`
   *[
     _type == "article" &&

@@ -1,68 +1,36 @@
+import { PortableText } from "@portabletext/react";
 import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import teamJoseph from "../../assets/team-joseph-antwi.png";
-import teamAnthony from "../../assets/team-anthony-arthur.jpg";
-import teamFrancis from "../../assets/team-francis-donkor.jpeg";
-import teamAaron from "../../assets/team-aaron-akutteh.jpeg";
-import teamRacheal from "../../assets/team-racheal-boateng.jpeg";
-
-const TEAM_MEMBERS = [
-  {
-    title: "Mr",
-    name: "Joseph Antwi",
-    role: "Senior Policy Analyst",
-    qualification: "Research and Policy Analysis",
-    employment: "Government of Alberta, Canada",
-    assembly: "Assin Akropong",
-    image: teamJoseph,
-    bio: "",
-  },
-  {
-    title: "Elder",
-    name: "Anthony Kobina Odum Arthur",
-    role: "Marketing Consultant",
-    qualification: "Chartered Marketer, MCIM",
-    employment: "",
-    assembly: "Living Spring Assembly, New Mamprobi Area",
-    image: teamAnthony,
-    bio: "",
-  },
-  {
-    title: "Mr",
-    name: "Francis Donkor",
-    role: "Auditor",
-    qualification: "ACCA",
-    employment: "BDO UK, Bridgewater House, Bristol - UK",
-    assembly: "Odorkor Central",
-    image: teamFrancis,
-    bio: "Francis Donkor is an ACCA-qualified accountant and finance professional with experience in audit, financial reporting, and business advisory. He has worked with leading international firms, including BDO UK and EY Ghana, serving clients across a variety of industries.\n\nAs a Christian, Francis is passionate about integrating faith with excellence in the workplace. He believes that business is a platform to honour God, serve others with integrity, and create lasting value. He is committed to ethical leadership, continuous learning, and using his professional skills to positively impact organisations and communities.\n\nOutside of work, Francis enjoys mentoring young professionals, supporting personal and professional development, and building meaningful relationships with like-minded believers. Through the Christ Business Network, he looks forward to connecting with fellow Christian professionals and entrepreneurs, growing in faith, sharing knowledge, and encouraging others to pursue excellence while advancing God's Kingdom through business.",
-  },
-  {
-    title: "Ing.",
-    name: "Aaron Akusem Akutteh",
-    role: "Regional Engineer, Ashanti Region",
-    qualification: "GHIE PE",
-    employment: "National Communications Authority",
-    assembly: "Santasi, Daaban Area",
-    image: teamAaron,
-    bio: "",
-  },
-  {
-    title: "Ms",
-    name: "Racheal Boateng",
-    role: "Journalist",
-    qualification: "Journalist",
-    employment: "",
-    assembly: "Upper Room Assembly, Odorkor Branch",
-    image: teamRacheal,
-    bio: "",
-  },
-];
+import { fetchMembers } from "../sanity/services";
+import type { SanityMember } from "../sanity/types";
 
 export default function Team() {
+  const [members, setMembers] = useState<SanityMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setCardsPerPage] = useState(4);
-  const [selectedMember, setSelectedMember] = useState<(typeof TEAM_MEMBERS)[number] | null>(null);
+  const [selectedMember, setSelectedMember] = useState<SanityMember | null>(null);
+
+  useEffect(() => {
+    let active = true;
+
+    fetchMembers()
+      .then((sanityMembers) => {
+        if (active) setMembers(sanityMembers);
+      })
+      .catch((fetchError) => {
+        console.error('Unable to load Sanity members', fetchError);
+        if (active) setError('Member profiles could not be loaded. Please try again shortly.');
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!selectedMember) {
@@ -85,9 +53,9 @@ export default function Team() {
     };
   }, [selectedMember]);
 
-  const totalPages = Math.ceil(TEAM_MEMBERS.length / cardsPerPage);
+  const totalPages = Math.max(1, Math.ceil(members.length / cardsPerPage));
   const pageStart = (currentPage - 1) * cardsPerPage;
-  const visibleMembers = TEAM_MEMBERS.slice(pageStart, pageStart + cardsPerPage);
+  const visibleMembers = members.slice(pageStart, pageStart + cardsPerPage);
 
   const changeCardsPerPage = (value: number) => {
     setCardsPerPage(value);
@@ -115,6 +83,12 @@ export default function Team() {
           </div>
         </div>
 
+        {loading && <p className="text-center text-gray-600">Loading member profiles...</p>}
+        {error && <p className="text-center text-brand-red">{error}</p>}
+        {!loading && !error && members.length === 0 && (
+          <p className="text-center text-gray-600">Member profiles will be published soon.</p>
+        )}
+
         <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
           {visibleMembers.map((member) => (
             <button
@@ -124,11 +98,17 @@ export default function Team() {
               aria-label={`View ${member.name} profile`}
               className="group relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-brand-dark text-left shadow-sm focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-red/35"
             >
-              <img
-                src={member.image}
-                alt={member.name}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              {member.image ? (
+                <img
+                  src={member.image}
+                  alt={member.imageAlt || member.name}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-brand-navy font-display text-7xl font-bold text-white/25">
+                  {member.name.charAt(0)}
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/35 to-transparent"></div>
               <div className="absolute bottom-8 left-8 right-8 text-white">
                 <h3 className="font-display text-xl font-bold leading-tight">
@@ -146,45 +126,47 @@ export default function Team() {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-5 border-t border-gray-200 pt-7 sm:flex-row">
-          <label className="flex items-center gap-3 font-sans text-sm font-semibold text-brand-dark">
-            Cards per page
-            <select
-              value={cardsPerPage}
-              onChange={(event) => changeCardsPerPage(Number(event.target.value))}
-              className="rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-red/20"
-              aria-label="Cards per page"
-            >
-              {[4, 8, 12].map((amount) => (
-                <option key={amount} value={amount}>{amount}</option>
-              ))}
-            </select>
-          </label>
+        {!loading && !error && members.length > 0 && (
+          <div className="mt-10 flex flex-col items-center justify-between gap-5 border-t border-gray-200 pt-7 sm:flex-row">
+            <label className="flex items-center gap-3 font-sans text-sm font-semibold text-brand-dark">
+              Cards per page
+              <select
+                value={cardsPerPage}
+                onChange={(event) => changeCardsPerPage(Number(event.target.value))}
+                className="rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-red/20"
+                aria-label="Cards per page"
+              >
+                {[4, 8, 12].map((amount) => (
+                  <option key={amount} value={amount}>{amount}</option>
+                ))}
+              </select>
+            </label>
 
-          <nav className="flex flex-wrap items-center justify-center gap-2" aria-label="Members pagination">
-            <button
-              type="button"
-              onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
-              disabled={currentPage === 1}
-              className="inline-flex items-center gap-1 rounded-full border border-gray-300 bg-white px-4 py-2 font-sans text-sm font-semibold text-brand-dark transition hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-300 disabled:hover:text-brand-dark"
-            >
-              <ChevronLeft className="h-4 w-4" /> Previous
-            </button>
+            <nav className="flex flex-wrap items-center justify-center gap-2" aria-label="Members pagination">
+              <button
+                type="button"
+                onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+                disabled={currentPage === 1}
+                className="inline-flex items-center gap-1 rounded-full border border-gray-300 bg-white px-4 py-2 font-sans text-sm font-semibold text-brand-dark transition hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-300 disabled:hover:text-brand-dark"
+              >
+                <ChevronLeft className="h-4 w-4" /> Previous
+              </button>
 
-            <span className="min-w-24 text-center font-sans text-sm font-semibold text-gray-600">
-              Page {currentPage} of {totalPages}
-            </span>
+              <span className="min-w-24 text-center font-sans text-sm font-semibold text-gray-600">
+                Page {currentPage} of {totalPages}
+              </span>
 
-            <button
-              type="button"
-              onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
-              disabled={currentPage === totalPages}
-              className="inline-flex items-center gap-1 rounded-full border border-gray-300 bg-white px-4 py-2 font-sans text-sm font-semibold text-brand-dark transition hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-300 disabled:hover:text-brand-dark"
-            >
-              Next <ChevronRight className="h-4 w-4" />
-            </button>
-          </nav>
-        </div>
+              <button
+                type="button"
+                onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+                disabled={currentPage === totalPages}
+                className="inline-flex items-center gap-1 rounded-full border border-gray-300 bg-white px-4 py-2 font-sans text-sm font-semibold text-brand-dark transition hover:border-brand-red hover:text-brand-red disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-300 disabled:hover:text-brand-dark"
+              >
+                Next <ChevronRight className="h-4 w-4" />
+              </button>
+            </nav>
+          </div>
+        )}
       </div>
 
       {selectedMember && (
@@ -200,11 +182,17 @@ export default function Team() {
             onMouseDown={(event) => event.stopPropagation()}
           >
             <div className="relative h-[280px] overflow-hidden bg-brand-dark md:h-full">
-              <img
-                src={selectedMember.image}
-                alt={selectedMember.name}
-                className="absolute inset-0 h-full w-full object-cover"
-              />
+              {selectedMember.image ? (
+                <img
+                  src={selectedMember.image}
+                  alt={selectedMember.imageAlt || selectedMember.name}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center font-display text-8xl font-bold text-white/25">
+                  {selectedMember.name.charAt(0)}
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/45 to-transparent md:hidden"></div>
             </div>
 
@@ -215,7 +203,7 @@ export default function Team() {
                     MEMBER
                   </span>
                   <h3 id="team-member-modal-title" className="mt-4 font-display text-3xl font-bold leading-tight text-brand-dark sm:text-4xl">
-                    {selectedMember.name}
+                    {selectedMember.title ? `${selectedMember.title} ` : ''}{selectedMember.name}
                   </h3>
                   <p className="mt-2 font-sans text-sm font-semibold uppercase tracking-wide text-brand-red">
                     {selectedMember.role}
@@ -255,15 +243,11 @@ export default function Team() {
                 )}
               </div>
 
-              {selectedMember.bio && (
-                <div className="mt-6 space-y-4">
-                  {selectedMember.bio.split("\n\n").map((paragraph) => (
-                    <p key={paragraph} className="text-gray-600 font-sans text-base leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
+              {selectedMember.bio?.length ? (
+                <div className="mt-6 space-y-4 text-gray-600 font-sans text-base leading-relaxed">
+                  <PortableText value={selectedMember.bio} />
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>

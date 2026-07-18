@@ -13,7 +13,8 @@
     "migrate:legacy:dry": "sanity exec scripts/importLegacyContent.mjs --with-user-token",
     "migrate:legacy": "sanity exec scripts/importLegacyContent.mjs --with-user-token -- --execute",
     "migrate:legacy:validate": "sanity exec scripts/validateLegacyContent.mjs --with-user-token",
-    "seed:leaders": "sanity exec scripts/seedLeaders.mjs --with-user-token"
+    "seed:leaders": "sanity exec scripts/seedLeaders.mjs --with-user-token",
+    "seed:members": "sanity exec scripts/seedMembers.mjs --with-user-token"
   },
   "keywords": [
     "sanity"
