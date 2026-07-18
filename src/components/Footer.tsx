@@ -103,11 +103,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5">
               {[
-                { label: "Membership Benefits", href: "#/membership" },
-                { label: "Membership Requirements", href: "#/membership" },
-                { label: "How to Register", href: "#/membership" },
-                { label: "Payment Information", href: "#/membership" },
-                { label: "FAQs", href: "#/contact" },
+                { label: "Membership Benefits", href: "/membership" },
+                { label: "Membership Requirements", href: "/membership" },
+                { label: "How to Register", href: "/membership" },
+                { label: "Payment Information", href: "/membership" },
+                { label: "FAQs", href: "/contact" },
               ].map((item) => (
                 <li key={item.label}>
                   <a

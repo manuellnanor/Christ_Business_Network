@@ -35,7 +35,7 @@ export default function PageHero({ title, current, image, parent }: PageHeroProp
               className="mt-5 flex flex-wrap items-center gap-2 font-sans text-base font-semibold text-white/86 sm:text-lg"
               aria-label="Breadcrumb"
             >
-              <a href="#/" className="transition-colors hover:text-brand-red">
+              <a href="/" className="transition-colors hover:text-brand-red">
                 Home
               </a>
               {parent && (

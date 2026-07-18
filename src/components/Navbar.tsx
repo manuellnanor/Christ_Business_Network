@@ -6,10 +6,11 @@ import { NAV_LINKS } from "../data";
 
 interface NavbarProps {
   onDonateClick: () => void;
+  onNavigate: (route: string) => void;
   currentRoute: string;
 }
 
-export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
+export default function Navbar({ onDonateClick, onNavigate, currentRoute }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -43,20 +44,19 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
   const handleLinkClick = (href: string) => {
     setIsOpen(false);
     setActiveDropdown(null);
-    if (window.location.hash === href) {
+    if (currentRoute === href) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
-    window.location.hash = href.replace("#", "");
+    onNavigate(href);
   };
 
   const isActive = (href: string, children?: { href: string }[]) => {
-    const route = href.replace("#", "");
     const matchesRoute = (candidate: string) =>
       currentRoute === candidate || (candidate !== "/" && currentRoute.startsWith(`${candidate}/`));
 
-    return matchesRoute(route) || Boolean(children?.some((child) => matchesRoute(child.href.replace("#", ""))));
+    return matchesRoute(href) || Boolean(children?.some((child) => matchesRoute(child.href)));
   };
 
   return (
@@ -73,11 +73,11 @@ export default function Navbar({ onDonateClick, currentRoute }: NavbarProps) {
         {/* Left Side: Brand Logo */}
         <div className="flex-shrink-0 flex items-center">
           <a
-            href="#/"
+            href="/"
             id="nav-logo"
             onClick={(e) => {
               e.preventDefault();
-              handleLinkClick("#/");
+              handleLinkClick("/");
             }}
             className="flex items-center gap-2.5 group"
           >

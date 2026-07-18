@@ -272,26 +272,26 @@ export interface NavLink {
 }
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "Home", href: "#/" },
+  { label: "Home", href: "/" },
   {
     label: "About CBN",
-    href: "#/about",
+    href: "/about",
     children: [
-      { label: "About Us", href: "#/about" },
-      { label: "Leaders", href: "#/leaders" },
+      { label: "About Us", href: "/about" },
+      { label: "Leaders", href: "/leaders" },
     ],
   },
-  { label: "Membership", href: "#/membership" },
+  { label: "Membership", href: "/membership" },
   {
     label: "Programmes and Resources",
-    href: "#/programmes/events",
+    href: "/programmes/events",
     children: [
-      { label: "Events", href: "#/programmes/events" },
-      { label: "Gallery", href: "#/programmes/gallery" },
-      { label: "Articles", href: "#/resources/articles" },
+      { label: "Events", href: "/programmes/events" },
+      { label: "Gallery", href: "/programmes/gallery" },
+      { label: "Articles", href: "/resources/articles" },
     ],
   },
-  { label: "Contact", href: "#/contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const SERVICES: ServiceItem[] = [

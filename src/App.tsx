@@ -32,7 +32,11 @@ import { PortableText } from "@portabletext/react";
 type AppRoute = "/" | "/about" | "/leaders" | "/membership" | "/programmes/events" | "/programmes/gallery" | "/resources/articles" | `/resources/articles/${string}` | "/contact";
 
 const getCurrentRoute = (): AppRoute => {
-  const route = window.location.hash.replace("#", "") || "/";
+  const legacyHashRoute = window.location.hash.startsWith("#/")
+    ? window.location.hash.slice(1)
+    : null;
+  const pathname = legacyHashRoute || window.location.pathname || "/";
+  const route = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
   const validRoutes: AppRoute[] = [
     "/",
     "/about",
@@ -108,12 +112,16 @@ export default function App() {
       window.history.scrollRestoration = "manual";
     }
 
+    if (window.location.hash.startsWith("#/")) {
+      window.history.replaceState({}, "", window.location.hash.slice(1));
+    }
+
     const handleRouteChange = () => {
       setRoute(getCurrentRoute());
     };
 
-    window.addEventListener("hashchange", handleRouteChange);
-    return () => window.removeEventListener("hashchange", handleRouteChange);
+    window.addEventListener("popstate", handleRouteChange);
+    return () => window.removeEventListener("popstate", handleRouteChange);
   }, []);
 
   useLayoutEffect(() => {
@@ -123,8 +131,16 @@ export default function App() {
     return () => window.clearTimeout(timeoutId);
   }, [route]);
 
-  const navigateTo = (nextRoute: AppRoute) => {
-    window.location.hash = nextRoute;
+  const navigateTo = (nextPath: string) => {
+    const nextRoute = nextPath as AppRoute;
+
+    if (window.location.pathname === nextRoute && !window.location.hash) {
+      resetPageScroll();
+      return;
+    }
+
+    window.history.pushState({}, "", nextRoute);
+    setRoute(nextRoute);
   };
 
   const goToMembership = () => {
@@ -294,7 +310,7 @@ export default function App() {
   return (
     <div className="bg-white text-brand-dark selection:bg-brand-red selection:text-white min-h-screen">
       {/* Header / Navbar */}
-      <Navbar onDonateClick={goToMembership} currentRoute={route} />
+      <Navbar onDonateClick={goToMembership} onNavigate={navigateTo} currentRoute={route} />
 
       {/* Main Body Sections */}
       <main key={route}>{renderPage()}</main>
