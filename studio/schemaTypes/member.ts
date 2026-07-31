@@ -30,7 +30,6 @@ export default defineType({
       title: 'Profile Photo',
       type: 'image',
       options: {hotspot: true},
-      validation: (rule) => rule.required(),
       fields: [
         defineField({
           name: 'alt',
@@ -43,6 +42,43 @@ export default defineType({
     defineField({name: 'qualification', title: 'Professional Qualification', type: 'string'}),
     defineField({name: 'employment', title: 'Current Employment', type: 'string'}),
     defineField({name: 'assembly', title: 'Local Assembly', type: 'string'}),
+    defineField({name: 'email', title: 'Email', type: 'email', group: 'private'}),
+    defineField({
+      name: 'gender',
+      title: 'Gender',
+      type: 'string',
+      group: 'private',
+      options: {list: ['Female', 'Male']},
+    }),
+    defineField({name: 'dateOfBirth', title: 'Date of Birth', type: 'date', group: 'private'}),
+    defineField({
+      name: 'phoneNumbers',
+      title: 'Phone Numbers',
+      type: 'array',
+      group: 'private',
+      of: [defineArrayMember({type: 'string'})],
+    }),
+    defineField({name: 'educationLevel', title: 'Education Level', type: 'string'}),
+    defineField({
+      name: 'institutions',
+      title: 'Educational Institutions',
+      type: 'array',
+      of: [defineArrayMember({type: 'string'})],
+    }),
+    defineField({name: 'profession', title: 'Profession', type: 'string'}),
+    defineField({
+      name: 'preferredAreas',
+      title: 'Preferred Areas of Service',
+      type: 'array',
+      of: [defineArrayMember({type: 'string'})],
+      options: {layout: 'tags'},
+    }),
+    defineField({
+      name: 'photoSourceUrl',
+      title: 'Original Photo Link',
+      type: 'url',
+      description: 'Source link retained when the profile photo cannot be imported automatically.',
+    }),
     defineField({
       name: 'bio',
       title: 'Profile / Biography',
@@ -70,8 +106,13 @@ export default defineType({
       hidden: true,
     }),
   ],
+  groups: [{name: 'private', title: 'Private contact details'}],
   orderings: [
-    {title: 'Display order', name: 'displayOrderAsc', by: [{field: 'displayOrder', direction: 'asc'}]},
+    {
+      title: 'Display order',
+      name: 'displayOrderAsc',
+      by: [{field: 'displayOrder', direction: 'asc'}],
+    },
   ],
   preview: {
     select: {title: 'name', subtitle: 'role', media: 'portrait'},
