@@ -77,13 +77,14 @@ const members = [
     assembly: 'FWC Adenta',
     preferredAreas: ['Programmes', 'Welfare'],
     bio: ['Resident Minister of FWC Adenta'],
+    imagePath: asset('member-yeboah-shadrack.jpg'),
     photoSourceUrl: 'https://drive.google.com/open?id=1JezstMgQYTM27rs05ykbtr8XHJl8I_Kf',
   },
   {
     importKey: 'albert-owusu-boateng',
     name: 'Albert Owusu-Boateng',
     title: 'Elder',
-    role: 'Branch Manager',
+    role: 'HR Professional (CIHRM)',
     email: 'aowusu_boateng@yahoo.com',
     gender: 'Male',
     dateOfBirth: '1976-06-29',
@@ -97,6 +98,7 @@ const members = [
     bio: [
       'I am married with two children. I am passionate about personality and organizational development through training, mentorship, policy development, and advocacy.',
     ],
+    imagePath: asset('member-albert-owusu-boateng.jpeg'),
     photoSourceUrl: 'https://drive.google.com/open?id=1Zd0Ln4YYNouwC7b4oh36P-Z6Ww2BtDCE',
   },
   {
@@ -117,6 +119,7 @@ const members = [
     bio: [
       "My name is Theresa Arthur, and I am a Marketing Manager in the Corporate Group Business Department at SIC Life Insurance. Before this role, I worked as an Administrative Secretary and Personal Assistant. These experiences strengthened my organizational, communication, and relationship-management skills. I hold a Master's degree in Administrative Management and am passionate about building meaningful relationships, creating value through business, and supporting organizations with corporate insurance solutions. I am excited to join the Christ Business Network and look forward to learning, connecting, and growing with like-minded Christian professionals.",
     ],
+    imagePath: asset('member-theresa-arthur.jpeg'),
     photoSourceUrl: 'https://drive.google.com/open?id=1QKohSA_ph-HFLE83xRzKwBeUKQwL57Gs',
   },
   {
